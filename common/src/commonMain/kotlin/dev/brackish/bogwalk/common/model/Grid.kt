@@ -1,12 +1,17 @@
 package dev.brackish.bogwalk.common.model
 
-class Grid {
-    private val cells = Array(3) { Array(3) { Cell.EMPTY } }
+class Grid(
+    elements: String = ""
+) {
+    private val cells = Array(3) { r -> Array(3) { c ->
+            if (elements.isEmpty()) Cell.EMPTY else Cell.valueOf(elements[r / 3 + c % 3].toString())
+        }
+    }
 
     override fun toString(): String {
         val output = StringBuilder()
         cells.forEach { row ->
-            output.append(row.joinToString(separator = "", postfix = "\n") { it.mark })
+            output.append(row.joinToString("") { it.mark })
         }
         return output.toString()
     }
