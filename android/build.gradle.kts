@@ -4,7 +4,7 @@ plugins {
     kotlin("android")
 }
 
-group = "dev.brackish.bogwalk"
+group = "dev.bogwalk"
 version = "1.0"
 
 dependencies {
@@ -16,7 +16,7 @@ android {
     compileSdk = 31
 
     defaultConfig {
-        applicationId = "dev.brackish.bogwalk.android"
+        applicationId = "dev.bogwalk.android"
         minSdk = 24
         targetSdk = 31
         versionCode = 1

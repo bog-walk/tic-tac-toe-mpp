@@ -9,7 +9,7 @@ plugins {
     id("org.jetbrains.compose") apply false
 }
 
-group = "dev.brackish.bogwalk"
+group = "dev.bogwalk"
 version = "1.0"
 
 allprojects {

@@ -1,4 +1,4 @@
-package dev.brackish.bogwalk.common
+package dev.bogwalk.common
 
 import androidx.compose.runtime.Composable
 

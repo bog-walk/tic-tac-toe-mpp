@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.compose")
 }
 
-group = "dev.brackish.bogwalk"
+group = "dev.bogwalk"
 version = "1.0"
 
 kotlin {
@@ -14,7 +14,6 @@ kotlin {
         compilations.all {
             kotlinOptions.jvmTarget = "11"
         }
-        withJava()
     }
     sourceSets {
         val jvmMain by getting {
@@ -28,6 +27,7 @@ kotlin {
                 implementation(project(":common"))
                 implementation(kotlin("test"))
                 implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+                implementation("junit:junit:4.13.2")
             }
         }
     }
@@ -38,7 +38,7 @@ compose.desktop {
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "jvm"
+            packageName = "tic-tac-toe"
             packageVersion = "1.0.0"
         }
     }

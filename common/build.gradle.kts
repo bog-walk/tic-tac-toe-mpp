@@ -6,7 +6,7 @@ plugins {
     id("com.android.library")
 }
 
-group = "dev.brackish.bogwalk"
+group = "dev.bogwalk"
 version = "1.0"
 
 kotlin {
@@ -27,17 +27,20 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+                implementation("junit:junit:4.13.2")
             }
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.appcompat:appcompat:1.4.1")
-                api("androidx.core:core-ktx:1.7.0")
+                api("androidx.appcompat:appcompat:1.4.2")
+                api("androidx.core:core-ktx:1.8.0")
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation("junit:junit:4.13")
+                implementation(kotlin("test"))
+                implementation("junit:junit:4.13.2")
             }
         }
         val desktopMain by getting {
@@ -50,6 +53,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+                implementation("junit:junit:4.13.2")
             }
         }
     }
@@ -74,4 +78,7 @@ android {
             res.srcDirs("src/androidMain/res")
         }
     }
+}
+dependencies {
+    implementation("junit:junit:4.13.1")
 }
