@@ -5,19 +5,20 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import dev.bogwalk.common.model.Cell
-import dev.bogwalk.common.ui.style.cellElevation
-import dev.bogwalk.common.ui.style.cellFontSize
-import dev.bogwalk.common.ui.style.cellPadding
-import dev.bogwalk.common.ui.style.cellSize
+import dev.bogwalk.common.ui.style.*
 
 @Composable
 fun T3Cell(cell: Cell) {
     Button(
         onClick = {},
-        modifier = Modifier.padding(cellPadding).requiredSize(cellSize),
+        modifier = Modifier
+            .testTag(CELL_TEST_TAG)
+            .padding(cellPadding)
+            .requiredSize(cellSize),
         enabled = cell == Cell.EMPTY,
         elevation = ButtonDefaults.elevation(defaultElevation = cellElevation),
         shape = MaterialTheme.shapes.medium,

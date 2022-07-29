@@ -16,9 +16,6 @@ kotlin {
             kotlinOptions.jvmTarget = "11"
             kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         }
-        testRuns["test"].executionTask.configure {
-            useJUnit()
-        }
     }
     sourceSets {
         val commonMain by getting {
@@ -30,8 +27,8 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
-                implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-junit"))
             }
         }
         val androidMain by getting {
@@ -42,6 +39,7 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
+                implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
             }
         }
@@ -53,8 +51,9 @@ kotlin {
         }
         val desktopTest by getting {
             dependencies {
-                implementation(kotlin("test"))
+                implementation(kotlin("test-junit"))
                 implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+                implementation("junit:junit:4.13.2")
             }
         }
     }

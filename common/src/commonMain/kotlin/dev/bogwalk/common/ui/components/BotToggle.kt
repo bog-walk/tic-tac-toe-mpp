@@ -9,6 +9,7 @@ import androidx.compose.material.SwitchDefaults
 import androidx.compose.ui.Alignment
 import dev.bogwalk.common.model.BotMode
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import dev.bogwalk.common.ui.style.*
 
 @Composable
@@ -28,6 +29,7 @@ fun BotToggle(botMode: BotMode) {
         Switch(
             checked = botMode == BotMode.HARD,
             onCheckedChange = {},
+            modifier = Modifier.testTag(TOGGLE_TEST_TAG),
             colors = SwitchDefaults.colors(
                 checkedThumbColor = MaterialTheme.colors.secondary,
                 uncheckedThumbColor = MaterialTheme.colors.onBackground

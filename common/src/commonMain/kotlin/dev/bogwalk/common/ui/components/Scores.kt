@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import dev.bogwalk.common.ui.style.*
 
 @Composable
@@ -27,7 +28,7 @@ fun Scores(
             p1Score
         )
         SingleScore(
-            if (p2IsBot) Bot_TEXT else MP_P2_TEXT,
+            if (p2IsBot) BOT_TEXT else MP_P2_TEXT,
             MaterialTheme.colors.secondary,
             p2Score
         )
@@ -68,6 +69,7 @@ private fun SingleScore(
         ) { targetCount ->
             Text(
                 text = "$targetCount",
+                modifier = Modifier.testTag(SCORE_TEST_TAG),
                 color = MaterialTheme.colors.onBackground,
                 style = MaterialTheme.typography.body1
             )
