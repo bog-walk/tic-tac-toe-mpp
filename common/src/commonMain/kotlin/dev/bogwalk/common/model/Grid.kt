@@ -7,7 +7,7 @@ package dev.bogwalk.common.model
 class Grid(
     elements: String = ""
 ) {
-    private val cells = if (elements.isEmpty()) {
+    private val _cells = if (elements.isEmpty()) {
         List(3) { MutableList(3) { Cell.EMPTY } }
     } else {
         List(3) { row -> MutableList(3) { col ->
@@ -17,9 +17,11 @@ class Grid(
             }
         } }
     }
+    val cells: List<List<Cell>>
+        get() = _cells
 
     override fun toString(): String {
-        return cells.flatten().stringify()
+        return _cells.flatten().stringify()
     }
 
     private fun List<Cell>.stringify(): String {
@@ -35,8 +37,8 @@ class Grid(
      */
     fun mark(row: Int, col: Int, player: Player) {
         require(row in 0..2 && col in 0..2) { "Invalid cell coordinates" }
-        require(cells[row][col] == Cell.EMPTY) { "Cell already occupied" }
-        cells[row][col] = Cell.valueOf(player.name)
+        require(_cells[row][col] == Cell.EMPTY) { "Cell already occupied" }
+        _cells[row][col] = Cell.valueOf(player.name)
     }
 
     /**
@@ -46,7 +48,7 @@ class Grid(
     fun assessState(): GameState {
         return when {
             findWinner() -> GameState.OVER_WINNER
-            cells.flatten().none { it == Cell.EMPTY } -> GameState.OVER_DRAW
+            _cells.flatten().none { it == Cell.EMPTY } -> GameState.OVER_DRAW
             else -> GameState.PLAYING
         }
     }
@@ -75,7 +77,7 @@ class Grid(
         for (row in diagonals() zip listOf(listOf(0, 4, 8), listOf(2, 4, 6))) {
             yield(row)
         }
-        for ((i, row) in cells.withIndex()) {
+        for ((i, row) in _cells.withIndex()) {
             yield(row.stringify() to listOf(i * 3, i * 3 + 1, i * 3 + 2))
         }
         for ((i, row) in transpose().withIndex()) {
@@ -84,13 +86,13 @@ class Grid(
     }
 
     private fun diagonals(): List<String> {
-        val principal = List(3) { cells[it][it] }.stringify()
-        val secondary = List(3) { cells[it][2-it] }.stringify()
+        val principal = List(3) { _cells[it][it] }.stringify()
+        val secondary = List(3) { _cells[it][2-it] }.stringify()
         return listOf(principal, secondary)
     }
 
     private fun transpose(): List<List<Cell>> {
-        return List(3) { row -> List(3) { col -> cells[col][row] } }
+        return List(3) { row -> List(3) { col -> _cells[col][row] } }
     }
 
     /**
@@ -98,14 +100,14 @@ class Grid(
      * mark, or -1 if the mark is not present in the grid.
      */
     fun indexOf(mark: String): Int {
-        return cells.flatten().indexOf(Cell.valueOf(mark))
+        return _cells.flatten().indexOf(Cell.valueOf(mark))
     }
 
     /**
      * Returns a List of the indices (0 to 8 for flattened grid) of all cells that are empty.
      */
     fun findEmptySpots(): List<Int> {
-        return cells.flatten().mapIndexedNotNull { i, cell ->
+        return _cells.flatten().mapIndexedNotNull { i, cell ->
             if (cell == Cell.EMPTY) i else null
         }
     }

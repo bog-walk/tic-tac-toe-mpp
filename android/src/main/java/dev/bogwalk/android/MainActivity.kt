@@ -1,6 +1,6 @@
 package dev.brackish.bogwalk.android
 
-import dev.brackish.bogwalk.common.TicTacToeApp
+import dev.bogwalk.common.TicTacToeApp
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity

@@ -21,4 +21,6 @@ pluginManagement {
 
 rootProject.name = "tic-tac-toe"
 
-include(":common", ":desktop", ":android")
+include(":common")
+include(":desktop")
+include(":android")

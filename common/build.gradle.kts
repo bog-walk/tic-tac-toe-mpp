@@ -14,6 +14,10 @@ kotlin {
     jvm("desktop") {
         compilations.all {
             kotlinOptions.jvmTarget = "11"
+            kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnit()
         }
     }
     sourceSets {
@@ -28,7 +32,6 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
-                implementation("junit:junit:4.13.2")
             }
         }
         val androidMain by getting {
@@ -39,7 +42,6 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
-                implementation(kotlin("test"))
                 implementation("junit:junit:4.13.2")
             }
         }
@@ -53,7 +55,6 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
-                implementation("junit:junit:4.13.2")
             }
         }
     }
@@ -78,7 +79,4 @@ android {
             res.srcDirs("src/androidMain/res")
         }
     }
-}
-dependencies {
-    implementation("junit:junit:4.13.1")
 }
