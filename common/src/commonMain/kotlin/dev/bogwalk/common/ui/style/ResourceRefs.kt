@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.sp
 // Desktop App Window
 const val WINDOW_TITLE = "Tic Tac Toe"
 const val WINDOW_ICON = "t3_icon.svg"
-val windowWidth = 500.dp
+val windowWidth = 530.dp
 val windowHeight = 650.dp
 
 // T3Cell
@@ -23,30 +23,32 @@ val iconSize = 30.dp
 // Bot
 const val BOT_ICON = "t3_bot.svg"
 const val BOT_DESCRIPTION = "Bot icon"
-val togglePadding = 10.dp
+val togglePadding = 5.dp
 const val TOGGLE_TEST_TAG = "bot switch"
 
 // Home
 const val HOME_ICON = "t3_home.svg"
 const val HOME_DESCRIPTION = "Home icon"
+const val GAME_MODE_TEST_TAG = "mode button"
+const val OPTIONS_TEXT = "vs"
+const val OPTIONS_DESCRIPTION = "Choose game type"
 
 // Player
 const val PLAYER_ICON = "t3_face.svg"
-const val Player_DESCRIPTION = "Player icon"
+const val PLAYER_DESCRIPTION = "Player icon"
 
 // Header
 const val BOT_MOVE_TEXT = "Bot is deciding..."
-const val MP_MOVE_TEXT = " turn"
 const val SP_MOVE_TEXT = "Your turn"
-const val BOT_WIN_TEXT = "The bot wins"
-const val MP_WIN_TEXT = " wins"
+const val BOT_WIN_TEXT = "The bot wins!"
+const val SP_WIN_TEXT = "You win!"
+const val DRAW_TEXT = "No winner"
+val gridWidth = 320.dp
 
 // Scores
-const val MP_P1_TEXT = "PLAYER 1:"
-const val MP_P2_TEXT = "PLAYER 2:"
-const val SP_PX_TEXT = "PLAYER X:"
+const val PX_TEXT = "PLAYER X:"
+const val PO_TEXT = "PLAYER O:"
 const val BOT_TEXT = "BOT:"
-val scoreRow = 150.dp
 const val SCORE_TEST_TAG = "player score"
 
 // ResetButton

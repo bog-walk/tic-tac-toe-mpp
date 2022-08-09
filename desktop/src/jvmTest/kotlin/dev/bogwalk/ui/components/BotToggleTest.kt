@@ -14,16 +14,30 @@ internal class BotToggleTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun `BotToggle loads correctly`() {
+    fun `BotToggle loads correctly in single player`() {
         composeTestRule.setContent {
-            BotToggle(BotMode.EASY)
+            BotToggle(BotMode.EASY) {}
         }
-        composeTestRule.onNodeWithTag(TOGGLE_TEST_TAG)
+        composeTestRule
+            .onNodeWithContentDescription(BOT_DESCRIPTION)
+            .assertExists()
+            .assert(isNotFocusable() and !isSelectable())
+        composeTestRule
+            .onNodeWithTag(TOGGLE_TEST_TAG)
             .assertIsEnabled()
             .assertIsToggleable()
+    }
+
+    @Test
+    fun `BotToggle loads correctly in double player`() {
+        composeTestRule.setContent {
+            BotToggle(null) {}
+        }
         composeTestRule
-            .onAllNodesWithContentDescription(BOT_DESCRIPTION)
-            .assertCountEquals(2)
-            .assertAll(isNotFocusable() and !isSelectable())
+            .onNodeWithContentDescription(BOT_DESCRIPTION)
+            .assertExists()
+            .assert(isNotFocusable() and !isSelectable())
+        composeTestRule.onNodeWithTag(TOGGLE_TEST_TAG)
+            .assertIsNotEnabled()
     }
 }

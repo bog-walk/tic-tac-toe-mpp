@@ -21,3 +21,8 @@ enum class GameState {
     OVER_WINNER,
     OVER_DRAW
 }
+
+enum class GameMode {
+    SINGLE,
+    DOUBLE
+}

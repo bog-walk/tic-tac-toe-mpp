@@ -10,15 +10,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import dev.bogwalk.common.model.BotMode
-import dev.bogwalk.common.ui.style.HOME_DESCRIPTION
-import dev.bogwalk.common.ui.style.HOME_ICON
-import dev.bogwalk.common.ui.style.componentPadding
-import dev.bogwalk.common.ui.style.iconSize
+import dev.bogwalk.common.ui.style.*
 
 @Composable
 fun Header(
-    botMode: BotMode,
-    instructions: String
+    botMode: BotMode?,
+    instruction: String,
+    onToggleRequest: () -> Unit
 ) {
     Row(
         modifier = Modifier.padding(componentPadding).fillMaxWidth(),
@@ -27,19 +25,20 @@ fun Header(
     ) {
         IconButton(
             onClick = {},
-            modifier = Modifier.padding(componentPadding).requiredSize(iconSize)
         ) {
             Icon(
                 painter = getPainter(HOME_ICON),
                 contentDescription = HOME_DESCRIPTION,
+                modifier = Modifier.requiredSize(iconSize),
                 tint = MaterialTheme.colors.onBackground
             )
         }
         Text(
-            text = instructions,
+            text = instruction,
+            modifier = Modifier.padding(componentPadding).requiredWidth(gridWidth),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.h5
         )
-        BotToggle(botMode)
+        BotToggle(botMode, onToggleRequest)
     }
 }

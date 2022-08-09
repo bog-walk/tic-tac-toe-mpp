@@ -13,9 +13,11 @@ import androidx.compose.ui.platform.testTag
 import dev.bogwalk.common.ui.style.*
 
 @Composable
-fun BotToggle(botMode: BotMode) {
+fun BotToggle(
+    botMode: BotMode?,
+    onToggleRequest: () -> Unit
+) {
     Row(
-        modifier = Modifier.padding(componentPadding),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -23,24 +25,22 @@ fun BotToggle(botMode: BotMode) {
             painter = getPainter(BOT_ICON),
             contentDescription = BOT_DESCRIPTION,
             modifier = Modifier.requiredSize(iconSize),
-            tint = MaterialTheme.colors.onBackground
+            tint = when (botMode) {
+                null -> MaterialTheme.colors.background
+                BotMode.EASY -> MaterialTheme.colors.onBackground
+                BotMode.HARD -> MaterialTheme.colors.secondary
+            }
         )
         Spacer(modifier = Modifier.width(togglePadding))
         Switch(
             checked = botMode == BotMode.HARD,
-            onCheckedChange = {},
+            onCheckedChange = { onToggleRequest() },
             modifier = Modifier.testTag(TOGGLE_TEST_TAG),
+            enabled = botMode != null,
             colors = SwitchDefaults.colors(
                 checkedThumbColor = MaterialTheme.colors.secondary,
                 uncheckedThumbColor = MaterialTheme.colors.onBackground
             )
-        )
-        Spacer(modifier = Modifier.width(togglePadding))
-        Icon(
-            painter = getPainter(BOT_ICON),
-            contentDescription = BOT_DESCRIPTION,
-            modifier = Modifier.requiredSize(iconSize),
-            tint = MaterialTheme.colors.secondary
         )
     }
 }

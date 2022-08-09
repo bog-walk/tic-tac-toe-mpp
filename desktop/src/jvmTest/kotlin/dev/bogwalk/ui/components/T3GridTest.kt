@@ -16,7 +16,7 @@ internal class T3GridTest {
     fun `T3Grid loads correctly at game start`() {
         val grid = Grid("         ")
         composeTestRule.setContent {
-            T3Grid(grid)
+            T3Grid(grid.cells) {}
         }
         composeTestRule
             .onAllNodesWithTag(CELL_TEST_TAG)
@@ -28,7 +28,7 @@ internal class T3GridTest {
     fun `T3Grid loads correctly during game play`() {
         val grid = Grid("XOX  O X ")
         composeTestRule.setContent {
-            T3Grid(grid)
+            T3Grid(grid.cells) {}
         }
         composeTestRule
             .onAllNodesWithTag(CELL_TEST_TAG)

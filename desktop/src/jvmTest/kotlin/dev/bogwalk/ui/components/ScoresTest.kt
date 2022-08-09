@@ -18,10 +18,10 @@ internal class ScoresTest {
             Scores(0, 0, false)
         }
         composeTestRule
-            .onNodeWithText(MP_P1_TEXT)
+            .onNodeWithText(PX_TEXT)
             .assertExists("Multiplayer not engaged")
         composeTestRule
-            .onNodeWithText(MP_P2_TEXT)
+            .onNodeWithText(PX_TEXT)
             .assertExists("Multiplayer not engaged")
         composeTestRule
             .onAllNodesWithTag(SCORE_TEST_TAG)
@@ -35,7 +35,7 @@ internal class ScoresTest {
             Scores(0, 0, true)
         }
         composeTestRule
-            .onNodeWithText(SP_PX_TEXT)
+            .onNodeWithText(PX_TEXT)
             .assertExists("Single player not engaged")
         composeTestRule
             .onNodeWithText(BOT_TEXT)

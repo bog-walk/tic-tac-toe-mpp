@@ -12,9 +12,13 @@ import dev.bogwalk.common.model.Cell
 import dev.bogwalk.common.ui.style.*
 
 @Composable
-fun T3Cell(cell: Cell) {
+fun T3Cell(
+    cell: Cell,
+    coordinates: Pair<Int, Int>,
+    onCellChosen: (Pair<Int, Int>) -> Unit
+) {
     Button(
-        onClick = {},
+        onClick = { onCellChosen(coordinates) },
         modifier = Modifier
             .testTag(CELL_TEST_TAG)
             .padding(cellPadding)

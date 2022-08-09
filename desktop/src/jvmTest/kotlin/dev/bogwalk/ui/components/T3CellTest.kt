@@ -18,7 +18,7 @@ internal class T3CellTest {
     fun `T3Cell is enabled only when unmarked`() {
         val mark = mutableStateOf(Cell.EMPTY)
         composeTestRule.setContent {
-            T3Cell(mark.value)
+            T3Cell(mark.value, 0 to 0) {}
         }
         composeTestRule
             .onNodeWithText(" ")

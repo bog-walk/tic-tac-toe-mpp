@@ -17,18 +17,19 @@ fun Scores(
     p2Score: Int,
     p2IsBot: Boolean
 ) {
-    Row(
-        modifier = Modifier.padding(componentPadding).requiredWidth(windowWidth),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = Modifier.padding(componentPadding),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SingleScore(
-            if (p2IsBot) SP_PX_TEXT else MP_P1_TEXT,
+            PX_TEXT,
             MaterialTheme.colors.primary,
             p1Score
         )
+        Spacer(modifier = Modifier.height(componentPadding))
         SingleScore(
-            if (p2IsBot) BOT_TEXT else MP_P2_TEXT,
+            if (p2IsBot) BOT_TEXT else PO_TEXT,
             MaterialTheme.colors.secondary,
             p2Score
         )
@@ -43,8 +44,7 @@ private fun SingleScore(
     score: Int
 ) {
     Row(
-        modifier = Modifier.requiredWidth(scoreRow),
-        horizontalArrangement = Arrangement.Start,
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(

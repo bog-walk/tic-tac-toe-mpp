@@ -61,57 +61,92 @@ internal class GridTest {
     }
 
     @Test
-    fun `assessState() correctly finds winner on full grid`() {
+    fun `findWinner() correctly finds winner on full grid`() {
         val input = "XOXXOOXXO".also {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertEquals(GameState.OVER_WINNER, grid.assessState())
+        assertTrue { grid.findWinner() }
     }
 
     @Test
-    fun `assessState() correctly determines draw on full grid`() {
+    fun `findWinner() does not mistake draw for win on full grid`() {
         val input = "XOXOOXXXO".also {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertEquals(GameState.OVER_DRAW, grid.assessState())
+        assertFalse { grid.findWinner() }
     }
 
     @Test
-    fun `assessState() correctly determines that game is still in play`() {
+    fun `findWinner() correctly determines that game is still in play`() {
         val input = "XOX      ".also {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertEquals(GameState.PLAYING, grid.assessState())
+        assertFalse { grid.findWinner() }
     }
 
     @Test
-    fun `assessState() correctly finds regular win`() {
+    fun `findWInner() correctly finds regular win`() {
         val input = "XXX O OO ".also {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertEquals(GameState.OVER_WINNER, grid.assessState())
+        assertTrue { grid.findWinner() }
     }
 
     @Test
-    fun `assessState() correctly finds transposed win`() {
+    fun `findWinner() correctly finds transposed win`() {
         val input = "XOXXO  O ".also {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertEquals(GameState.OVER_WINNER, grid.assessState())
+        assertTrue { grid.findWinner() }
     }
 
     @Test
-    fun `assessState() correctly finds diagonals win`() {
+    fun `findWinner() correctly finds diagonals win`() {
         val input = "XO  X  OX".also {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertEquals(GameState.OVER_WINNER, grid.assessState())
+        assertTrue { grid.findWinner() }
+    }
+
+    @Test
+    fun `allRows() yields the requested amount of rows`() {
+        val input = "XXX O OO ".also {
+            assertTrue { it.isValidTestInput() }
+        }
+        val grid = Grid(input)
+        val expectedMarks = listOf("XO ", "XOO", "XXX", " O ", "OO ", "X O")
+        val expectedIndices = listOf(
+            listOf(0, 4, 8), listOf(2, 4, 6),
+            listOf(0, 1, 2), listOf(3, 4, 5), listOf(6, 7, 8),
+            listOf(0, 3, 6)
+        )
+        val actual = grid.allRows().take(6).toList()
+        assertContentEquals(expectedMarks, actual.unzip().first)
+        assertContentEquals(expectedIndices, actual.unzip().second)
+    }
+
+    @Test
+    fun `allRows() correctly yields until iterator predicate fulfilled`() {
+        // both X and O are winners in this odd example
+        val input = "XXXOOO   ".also {
+            assertTrue { it.isValidTestInput() }
+        }
+        val grid = Grid(input)
+        // but X should be caught first based on function implementation (i.e. yield order)
+        val expected = "XXX" to listOf(0, 1, 2)
+        var actual = "" to emptyList<Int>()
+        val iter = grid.allRows().iterator()
+        while (iter.hasNext()) {
+            actual = iter.next()
+            if (actual.first in listOf("OOO", "XXX")) break
+        }
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -153,37 +188,15 @@ internal class GridTest {
     }
 
     @Test
-    fun `allRows() yields the requested amount of rows`() {
-        val input = "XXX O OO ".also {
+    fun `clear() empties all marks from grid`() {
+        val input = "XOXOOXXXO".also {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        val expectedMarks = listOf("XO ", "XOO", "XXX", " O ", "OO ", "X O")
-        val expectedIndices = listOf(
-            listOf(0, 4, 8), listOf(2, 4, 6),
-            listOf(0, 1, 2), listOf(3, 4, 5), listOf(6, 7, 8),
-            listOf(0, 3, 6)
-        )
-        val actual = grid.allRows().take(6).toList()
-        assertContentEquals(expectedMarks, actual.unzip().first)
-        assertContentEquals(expectedIndices, actual.unzip().second)
-    }
-
-    @Test
-    fun `allRows() correctly yields until iterator predicate fulfilled`() {
-        // both X and O are winners in this odd example
-        val input = "XXXOOO   ".also {
+        grid.clear()
+        val expected = "         ".also {
             assertTrue { it.isValidTestInput() }
         }
-        val grid = Grid(input)
-        // but X should be caught first based on function implementation (i.e. yield order)
-        val expected = "XXX" to listOf(0, 1, 2)
-        var actual = "" to emptyList<Int>()
-        val iter = grid.allRows().iterator()
-        while (iter.hasNext()) {
-            actual = iter.next()
-            if (actual.first in listOf("OOO", "XXX")) break
-        }
-        assertEquals(expected, actual)
+        assertEquals(expected, grid.toString())
     }
 }

@@ -1,5 +1,9 @@
 package dev.bogwalk.common.model
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+
 /**
  * Class representing the standard 3x3 game board with encapsulated functionality that progresses
  * game play and allows safe bot analysis.
@@ -17,8 +21,7 @@ class Grid(
             }
         } }
     }
-    val cells: List<List<Cell>>
-        get() = _cells
+    var cells by mutableStateOf(_cells)
 
     override fun toString(): String {
         return _cells.flatten().stringify()
@@ -42,23 +45,11 @@ class Grid(
     }
 
     /**
-     * Analyses game grid for a winner; otherwise, checks amount of empty cells to either
-     * declare a draw or to continue game play.
-     */
-    fun assessState(): GameState {
-        return when {
-            findWinner() -> GameState.OVER_WINNER
-            _cells.flatten().none { it == Cell.EMPTY } -> GameState.OVER_DRAW
-            else -> GameState.PLAYING
-        }
-    }
-
-    /**
      * If a winner is found, it must be current player; otherwise, this function would have
      * returned `true` on the previous assess. There is, therefore, no need to include an argument
      * for current player.
      */
-    private fun findWinner(): Boolean {
+    fun findWinner(): Boolean {
         val combos = allRows().iterator()
         while (combos.hasNext()) {
             if (combos.next().first in listOf("XXX", "OOO")) return true
@@ -109,6 +100,14 @@ class Grid(
     fun findEmptySpots(): List<Int> {
         return _cells.flatten().mapIndexedNotNull { i, cell ->
             if (cell == Cell.EMPTY) i else null
+        }
+    }
+
+    fun clear() {
+        for (r in 0..2) {
+            for (c in 0..2) {
+                _cells[r][c] = Cell.EMPTY
+            }
         }
     }
 }

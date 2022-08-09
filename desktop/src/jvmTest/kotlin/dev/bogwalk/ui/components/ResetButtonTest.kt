@@ -17,7 +17,7 @@ internal class ResetButtonTest {
     @Test
     fun `ResetButton is disabled during game play`() {
         composeTestRule.setContent {
-            ResetButton(GameState.PLAYING)
+            ResetButton(GameState.PLAYING) {}
         }
         composeTestRule
             .onNodeWithText(RESET_BUTTON_TEXT)
@@ -28,7 +28,7 @@ internal class ResetButtonTest {
     @Test
     fun `ResetButton is enabled once winner found`() {
         composeTestRule.setContent {
-            ResetButton(GameState.OVER_WINNER)
+            ResetButton(GameState.OVER_WINNER) {}
         }
         composeTestRule
             .onNodeWithText(RESET_BUTTON_TEXT)
@@ -39,7 +39,7 @@ internal class ResetButtonTest {
     @Test
     fun `ResetButton is enabled once a draw occurs`() {
         composeTestRule.setContent {
-            ResetButton(GameState.OVER_DRAW)
+            ResetButton(GameState.OVER_DRAW) {}
         }
         composeTestRule
             .onNodeWithText(RESET_BUTTON_TEXT)
