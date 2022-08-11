@@ -3,7 +3,7 @@ import org.jetbrains.compose.compose
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
-    id("com.android.library")
+    id("com.android.application")
 }
 
 group = "dev.bogwalk"
@@ -33,7 +33,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                api("androidx.appcompat:appcompat:1.4.2")
+                api("androidx.appcompat:appcompat:1.5.0")
                 api("androidx.core:core-ktx:1.8.0")
             }
         }
@@ -46,7 +46,7 @@ kotlin {
         val desktopMain by getting {
             dependencies {
                 api(compose.preview)
-                api(compose.desktop.common)
+                implementation(compose.desktop.common)
             }
         }
         val desktopTest by getting {
@@ -63,6 +63,7 @@ android {
     compileSdk = 31
 
     defaultConfig {
+        applicationId = "dev.bogwalk.common"
         minSdk = 24
         targetSdk = 31
     }

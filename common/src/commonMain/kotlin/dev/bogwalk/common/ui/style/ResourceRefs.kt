@@ -50,6 +50,7 @@ const val PX_TEXT = "PLAYER X:"
 const val PO_TEXT = "PLAYER O:"
 const val BOT_TEXT = "BOT:"
 const val SCORE_TEST_TAG = "player score"
+const val SCORE_ANIM_DUR = 400
 
 // ResetButton
 const val RESET_BUTTON_TEXT = "PLAY AGAIN"

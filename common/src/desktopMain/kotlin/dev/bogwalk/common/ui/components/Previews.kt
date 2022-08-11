@@ -17,19 +17,29 @@ import dev.bogwalk.common.ui.util.EntryView
 private fun T3CellPreview() {
     T3Theme {
         Column {
-            T3Cell(Cell.EMPTY, 0 to 0) {}
-            T3Cell(Cell.X, 1 to 1) {}
-            T3Cell(Cell.O, 2 to 2) {}
+            T3Cell(GameState.PLAYING, Cell.EMPTY, 0 to 0) {}
+            T3Cell(GameState.PLAYING, Cell.X, 1 to 1) {}
+            T3Cell(GameState.PLAYING, Cell.O, 2 to 2) {}
+            T3Cell(GameState.OVER_DRAW, Cell.EMPTY, 0 to 0) {}
         }
     }
 }
 
 @Preview
 @Composable
-private fun T3GridPreview() {
+private fun T3GridInPlayPreview() {
     val grid = Grid("XOX OX  X")
     T3Theme {
-        T3Grid(grid.cells) {}
+        T3Grid(GameState.PLAYING, grid.cells) {}
+    }
+}
+
+@Preview
+@Composable
+private fun T3GridWhenOverPreview() {
+    val grid = Grid("XXX   O O")
+    T3Theme {
+        T3Grid(GameState.OVER_WINNER, grid.cells) {}
     }
 }
 

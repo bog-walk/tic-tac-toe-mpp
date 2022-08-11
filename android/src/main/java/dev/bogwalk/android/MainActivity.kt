@@ -1,17 +1,18 @@
-package dev.brackish.bogwalk.android
+package dev.bogwalk.android
 
 import dev.bogwalk.common.TicTacToeApp
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.MaterialTheme
+import dev.bogwalk.common.model.GameMode
+import dev.bogwalk.common.ui.style.T3Theme
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
-                TicTacToeApp()
+            T3Theme {
+                TicTacToeApp(GameMode.DOUBLE)
             }
         }
     }

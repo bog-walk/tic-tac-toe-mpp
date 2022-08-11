@@ -1,10 +1,10 @@
 package dev.bogwalk.common.ui.util
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import dev.bogwalk.common.model.*
 import dev.bogwalk.common.ui.style.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 class T3AppState(
     private val mode: GameMode
@@ -20,10 +20,15 @@ class T3AppState(
         get() = grid.cells
 
     var gameState by mutableStateOf(GameState.PLAYING)
+        private set
     var currentInstruction by mutableStateOf(getInstruction())
+        private set
     var botMode by mutableStateOf(bot?.mode)
+        private set
     var player1Streak by mutableStateOf(0)
+        private set
     var player2Streak by mutableStateOf(0)
+        private set
 
     private fun getInstruction(): String {
         return when (gameState) {
@@ -45,13 +50,23 @@ class T3AppState(
         }
     }
 
-    fun toggleBot() = bot?.toggleMode()
+    fun toggleBot() {
+        botMode = bot?.toggleMode()
+    }
 
-    fun updateGame(row: Int, col: Int) {
+    fun updatePlayerMove(row: Int, col: Int) {
         grid.mark(row, col, turn)
         updateState()
-        bot?.let {
-            val botMove = it.move()
+    }
+
+    fun updateBotMove() = runBlocking {
+        if (gameState == GameState.PLAYING && bot != null) {
+            val botMove = bot.move()
+            delay(when (botMode) {
+                BotMode.EASY -> 1000
+                BotMode.HARD -> 2000
+                else -> 1
+            })
             grid.mark(botMove.first, botMove.second, turn)
             updateState()
         }
@@ -69,7 +84,7 @@ class T3AppState(
         }
         when (gameState) {
             GameState.PLAYING -> {
-                turn = if (turn == Player.X) Player.O else Player.X
+                turn = turn.next()
                 currentInstruction = getInstruction()
             }
             else -> {

@@ -6,10 +6,12 @@ import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.bogwalk.common.model.Cell
+import dev.bogwalk.common.model.GameState
 import dev.bogwalk.common.ui.style.componentPadding
 
 @Composable
 fun T3Grid(
+    gameState: GameState,
     board: List<MutableList<Cell>>,
     onCellChosen: (Pair<Int, Int>) -> Unit
 ) {
@@ -25,7 +27,7 @@ fun T3Grid(
             ) {
                 for ((col, cell) in board[row].withIndex()) {
                     key("$row$col") {
-                        T3Cell(cell, row to col, onCellChosen)
+                        T3Cell(gameState, cell, row to col, onCellChosen)
                     }
                 }
             }

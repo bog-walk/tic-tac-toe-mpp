@@ -1,6 +1,10 @@
 package dev.bogwalk.common.ui.components
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.tween
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -59,8 +63,10 @@ private fun SingleScore(
             targetState = score,
             transitionSpec = {
                 // score will only ever increase
-                (slideInVertically { y -> y } + fadeIn())
-                    .with(slideOutVertically { y -> -y } + fadeOut())
+                (slideInVertically(tween(SCORE_ANIM_DUR, easing = FastOutSlowInEasing)) { y -> y }
+                        + fadeIn(tween(SCORE_ANIM_DUR)))
+                    .with(slideOutVertically(tween(SCORE_ANIM_DUR, easing = FastOutSlowInEasing)) { y -> -y }
+                            + fadeOut(tween(SCORE_ANIM_DUR)))
                     .using(
                         // if not disabled, slide animation will not be displayed out of bounds
                         SizeTransform(clip = false)

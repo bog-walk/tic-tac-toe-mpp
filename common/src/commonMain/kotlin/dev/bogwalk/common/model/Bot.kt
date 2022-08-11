@@ -9,8 +9,10 @@ class Bot(
     var mode = BotMode.EASY
         private set
 
-    fun toggleMode() {
-        mode = if (mode == BotMode.EASY) BotMode.HARD else BotMode.EASY
+    // Should this be pulled out?
+    fun toggleMode(): BotMode {
+        mode = mode.toggle()
+        return mode
     }
 
     /**

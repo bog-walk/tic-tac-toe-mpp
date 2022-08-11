@@ -34,9 +34,10 @@ fun TicTacToeApp(mode: GameMode) {
             t3AppState.botMode != null
         )
         T3Grid(
+            t3AppState.gameState,
             t3AppState.board
         ) { (r, c) ->
-            t3AppState.updateGame(r, c)
+            t3AppState.updatePlayerMove(r, c)
         }
         ResetButton(t3AppState.gameState) {
             t3AppState.playAgain()

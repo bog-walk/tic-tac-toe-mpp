@@ -8,14 +8,29 @@ enum class Cell(val mark: Char) {
 
 enum class Player {
     X,
-    O
+    O;
+
+    fun next(): Player {
+        return when (this) {
+            X -> O
+            O -> X
+        }
+    }
 }
 
 enum class BotMode {
     EASY,
-    HARD
+    HARD;
+
+    fun toggle(): BotMode {
+        return when (this) {
+            EASY -> HARD
+            HARD -> EASY
+        }
+    }
 }
 
+// Should OVER_WINNER be separated based on winner?
 enum class GameState {
     PLAYING,
     OVER_WINNER,

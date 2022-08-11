@@ -9,10 +9,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import dev.bogwalk.common.model.Cell
+import dev.bogwalk.common.model.GameState
 import dev.bogwalk.common.ui.style.*
 
 @Composable
 fun T3Cell(
+    gameState: GameState,
     cell: Cell,
     coordinates: Pair<Int, Int>,
     onCellChosen: (Pair<Int, Int>) -> Unit
@@ -23,10 +25,10 @@ fun T3Cell(
             .testTag(CELL_TEST_TAG)
             .padding(cellPadding)
             .requiredSize(cellSize),
-        enabled = cell == Cell.EMPTY,
+        enabled = gameState == GameState.PLAYING && cell == Cell.EMPTY,
         elevation = ButtonDefaults.elevation(defaultElevation = cellElevation),
         shape = MaterialTheme.shapes.medium,
-        colors = getButtonColors(cell)
+        colors = getButtonColors(cell, gameState)
     ) {
         Text(
             text = cell.mark.toString(),
@@ -38,12 +40,18 @@ fun T3Cell(
 }
 
 @Composable
-private fun getButtonColors(cell: Cell): ButtonColors {
+private fun getButtonColors(
+    cell: Cell,
+    gameState: GameState
+): ButtonColors {
     return when (cell) {
         Cell.EMPTY -> {
-            ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.onBackground
-            )
+            when (gameState) {
+                GameState.PLAYING -> ButtonDefaults.buttonColors(
+                    backgroundColor = MaterialTheme.colors.onBackground
+                )
+                else -> ButtonDefaults.buttonColors()
+            }
         }
         Cell.X -> {
             ButtonDefaults.buttonColors(
