@@ -1,9 +1,9 @@
-package dev.bogwalk.ui.util
+package dev.bogwalk.ui.views
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import dev.bogwalk.common.ui.style.*
-import dev.bogwalk.common.ui.util.EntryView
+import dev.bogwalk.common.ui.views.EntryView
 import org.junit.Rule
 import org.junit.Test
 

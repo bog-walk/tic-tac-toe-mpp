@@ -12,7 +12,7 @@ import dev.bogwalk.common.ui.style.componentPadding
 @Composable
 fun T3Grid(
     gameState: GameState,
-    board: List<MutableList<Cell>>,
+    board: String,
     onCellChosen: (Pair<Int, Int>) -> Unit
 ) {
     Column(
@@ -25,9 +25,14 @@ fun T3Grid(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                for ((col, cell) in board[row].withIndex()) {
+                for (col in 0..2) {
                     key("$row$col") {
-                        T3Cell(gameState, cell, row to col, onCellChosen)
+                        T3Cell(
+                            gameState,
+                            Cell.fromChar(board[row * 3 + col]),
+                            row to col,
+                            onCellChosen
+                        )
                     }
                 }
             }

@@ -3,7 +3,6 @@ package dev.bogwalk.ui.components
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import dev.bogwalk.common.model.GameState
-import dev.bogwalk.common.model.Grid
 import dev.bogwalk.common.ui.components.T3Grid
 import dev.bogwalk.common.ui.style.CELL_TEST_TAG
 import org.junit.Rule
@@ -15,9 +14,8 @@ internal class T3GridTest {
 
     @Test
     fun `T3Grid loads correctly at game start`() {
-        val grid = Grid("         ")
         composeTestRule.setContent {
-            T3Grid(GameState.PLAYING, grid.cells) {}
+            T3Grid(GameState.PLAYING, "         ") {}
         }
         composeTestRule
             .onAllNodesWithTag(CELL_TEST_TAG)
@@ -27,9 +25,8 @@ internal class T3GridTest {
 
     @Test
     fun `T3Grid loads correctly during game play`() {
-        val grid = Grid("XOX  O X ")
         composeTestRule.setContent {
-            T3Grid(GameState.PLAYING, grid.cells) {}
+            T3Grid(GameState.PLAYING, "XOX  O X ") {}
         }
         composeTestRule
             .onAllNodesWithTag(CELL_TEST_TAG)

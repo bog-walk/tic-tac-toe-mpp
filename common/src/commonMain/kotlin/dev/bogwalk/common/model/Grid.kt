@@ -1,9 +1,5 @@
 package dev.bogwalk.common.model
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
-
 /**
  * Class representing the standard 3x3 game board with encapsulated functionality that progresses
  * game play and allows safe bot analysis.
@@ -21,7 +17,6 @@ class Grid(
             }
         } }
     }
-    var cells by mutableStateOf(_cells)
 
     override fun toString(): String {
         return _cells.flatten().stringify()

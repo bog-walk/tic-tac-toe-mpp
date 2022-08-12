@@ -1,10 +1,8 @@
-package dev.bogwalk.common.ui.util
+package dev.bogwalk.common.ui.views
 
 import androidx.compose.runtime.*
 import dev.bogwalk.common.model.*
 import dev.bogwalk.common.ui.style.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 
 class T3AppState(
     private val mode: GameMode
@@ -14,20 +12,16 @@ class T3AppState(
         GameMode.SINGLE -> Bot(grid)
         GameMode.DOUBLE -> null
     }
+    val botMode: BotMode?
+        get() = bot?.mode
     private var turn = Player.X
+    private var gameState = GameState.PLAYING
+    private var player1Streak = 0
+    private var player2Streak = 0
 
-    val board: List<MutableList<Cell>>
-        get() = grid.cells
-
-    var gameState by mutableStateOf(GameState.PLAYING)
-        private set
-    var currentInstruction by mutableStateOf(getInstruction())
-        private set
-    var botMode by mutableStateOf(bot?.mode)
-        private set
-    var player1Streak by mutableStateOf(0)
-        private set
-    var player2Streak by mutableStateOf(0)
+    var history by mutableStateOf(listOf(
+        TurnState(instruction = getInstruction(), board = grid.toString())
+    ))
         private set
 
     private fun getInstruction(): String {
@@ -51,58 +45,54 @@ class T3AppState(
     }
 
     fun toggleBot() {
-        botMode = bot?.toggleMode()
+        bot?.let {
+            it.mode = it.mode.toggle()
+        }
     }
 
-    fun updatePlayerMove(row: Int, col: Int) {
+    fun updateGame(row: Int, col: Int) {
         grid.mark(row, col, turn)
-        updateState()
-    }
-
-    fun updateBotMove() = runBlocking {
+        val currentChanges = mutableListOf(updateTurnState())
         if (gameState == GameState.PLAYING && bot != null) {
             val botMove = bot.move()
-            delay(when (botMode) {
-                BotMode.EASY -> 1000
-                BotMode.HARD -> 2000
-                else -> 1
-            })
             grid.mark(botMove.first, botMove.second, turn)
-            updateState()
+            currentChanges.add(updateTurnState())
         }
+        history = currentChanges
     }
 
     /**
      * Analyses game grid for a winner; otherwise, checks amount of empty cells to either
      * declare a draw or to continue game play.
      */
-    private fun updateState() {
+    private fun updateTurnState(): TurnState {
         gameState = when {
-            grid.findWinner() -> GameState.OVER_WINNER
-            grid.findEmptySpots().isEmpty() -> GameState.OVER_DRAW
-            else -> GameState.PLAYING
-        }
-        when (gameState) {
-            GameState.PLAYING -> {
-                turn = turn.next()
-                currentInstruction = getInstruction()
-            }
-            else -> {
-                currentInstruction = getInstruction()
-                if (gameState == GameState.OVER_WINNER) {
-                    when (turn) {
-                        Player.X -> player1Streak++
-                        Player.O -> player2Streak++
-                    }
+            grid.findWinner() -> {
+                when (turn) {
+                    Player.X -> player1Streak++
+                    Player.O -> player2Streak++
                 }
+                GameState.OVER_WINNER
+            }
+            grid.findEmptySpots().isEmpty() -> GameState.OVER_DRAW
+            else -> {
+                turn = turn.next()
+                GameState.PLAYING
             }
         }
+        return TurnState(
+            gameState, getInstruction(), grid.toString(), player1Streak, player2Streak
+        )
     }
 
     fun playAgain() {
         grid.clear()
         turn = Player.X
         gameState = GameState.PLAYING
-        currentInstruction = getInstruction()
+        history = listOf(
+            TurnState(
+            instruction = getInstruction(), board = grid.toString(),
+            player1Streak = player1Streak, player2Streak = player2Streak
+        ))
     }
 }

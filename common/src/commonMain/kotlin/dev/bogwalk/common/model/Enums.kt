@@ -3,7 +3,11 @@ package dev.bogwalk.common.model
 enum class Cell(val mark: Char) {
     X('X'),
     O('O'),
-    EMPTY(' ')
+    EMPTY(' ');
+
+    companion object {
+        fun fromChar(ch: Char): Cell = values().find { it.mark == ch }!!
+    }
 }
 
 enum class Player {

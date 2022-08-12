@@ -1,6 +1,6 @@
 package dev.bogwalk.android
 
-import dev.bogwalk.common.TicTacToeApp
+import dev.bogwalk.common.ui.views.GameView
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             T3Theme {
-                TicTacToeApp(GameMode.DOUBLE)
+                GameView(GameMode.DOUBLE)
             }
         }
     }

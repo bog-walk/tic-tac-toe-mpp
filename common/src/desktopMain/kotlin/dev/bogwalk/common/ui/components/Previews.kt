@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.bogwalk.common.model.*
 import dev.bogwalk.common.ui.style.*
-import dev.bogwalk.common.ui.util.EntryView
+import dev.bogwalk.common.ui.views.EntryView
 
 @Preview
 @Composable
@@ -28,18 +28,16 @@ private fun T3CellPreview() {
 @Preview
 @Composable
 private fun T3GridInPlayPreview() {
-    val grid = Grid("XOX OX  X")
     T3Theme {
-        T3Grid(GameState.PLAYING, grid.cells) {}
+        T3Grid(GameState.PLAYING, "XOX OX  X") {}
     }
 }
 
 @Preview
 @Composable
 private fun T3GridWhenOverPreview() {
-    val grid = Grid("XXX   O O")
     T3Theme {
-        T3Grid(GameState.OVER_WINNER, grid.cells) {}
+        T3Grid(GameState.OVER_WINNER, "XXX   O O") {}
     }
 }
 

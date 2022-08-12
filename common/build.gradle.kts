@@ -40,6 +40,7 @@ kotlin {
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
+                implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
                 implementation("junit:junit:4.13.2")
             }
         }
@@ -60,7 +61,7 @@ kotlin {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 32
 
     defaultConfig {
         applicationId = "dev.bogwalk.common"

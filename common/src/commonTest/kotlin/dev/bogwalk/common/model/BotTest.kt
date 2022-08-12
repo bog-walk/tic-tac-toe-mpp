@@ -34,16 +34,6 @@ internal class BotTest {
     }
 
     @Test
-    fun `toggleMode() works`() {
-        val bot = Bot(grid2)
-        assertEquals(BotMode.EASY, bot.mode)
-        bot.toggleMode()
-        assertEquals(BotMode.HARD, bot.mode)
-        bot.toggleMode()
-        assertEquals(BotMode.EASY, bot.mode)
-    }
-
-    @Test
     fun `easy bot picks a random spot on first move`() {
         val bot = Bot(grid1)
         val freeCells = listOf(0 to 0, 0 to 1, 0 to 2, 1 to 0, 1 to 2, 2 to 0, 2 to 1, 2 to 2)
@@ -59,14 +49,14 @@ internal class BotTest {
 
     @Test
     fun `hard bot picks centre cell on first move if free`() {
-        val bot = Bot(grid2).apply { toggleMode() }
+        val bot = Bot(grid2).apply { mode = BotMode.HARD }
         val expected = 1 to 1
         assertEquals(expected, bot.move())
     }
 
     @Test
     fun `hard bot picks corner cell on first move if centre taken`() {
-        val bot = Bot(grid1).apply { toggleMode() }
+        val bot = Bot(grid1).apply { mode = BotMode.HARD }
         val cornerCells = listOf(0 to 0, 0 to 2, 2 to 0, 2 to 2)
         assertTrue { bot.move() in cornerCells }
     }
@@ -79,7 +69,7 @@ internal class BotTest {
             val grid = Grid(input).also {
                 assertTrue { input.isValidTestInput() }
             }
-            val bot = Bot(grid).apply { toggleMode() }
+            val bot = Bot(grid).apply { mode = BotMode.HARD }
             assertEquals(expected[i], bot.move())
         }
     }
@@ -92,14 +82,14 @@ internal class BotTest {
             val grid = Grid(input).also {
                 assertTrue { input.isValidTestInput() }
             }
-            val bot = Bot(grid).apply { toggleMode() }
+            val bot = Bot(grid).apply { mode = BotMode.HARD }
             assertEquals(expected[i], bot.move())
         }
     }
 
     @Test
     fun `hard bot picks a random spot if no strategic options`() {
-        val bot = Bot(grid3).apply { toggleMode() }
+        val bot = Bot(grid3).apply { mode = BotMode.HARD }
         val freeCells = listOf(0 to 0, 0 to 1, 1 to 1, 1 to 2, 2 to 0, 2 to 2)
         assertTrue { bot.move() in freeCells }
     }

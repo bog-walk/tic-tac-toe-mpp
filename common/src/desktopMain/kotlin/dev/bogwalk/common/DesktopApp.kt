@@ -10,6 +10,7 @@ import dev.bogwalk.common.model.GameMode
 import dev.bogwalk.common.ui.style.T3Theme
 import dev.bogwalk.common.ui.style.windowHeight
 import dev.bogwalk.common.ui.style.windowWidth
+import dev.bogwalk.common.ui.views.GameView
 
 @Preview
 @Composable
@@ -18,7 +19,7 @@ fun SinglePlayerAppPreview() {
         Surface(
             modifier = Modifier.width(windowWidth).height(windowHeight)
         ) {
-            TicTacToeApp(GameMode.SINGLE)
+            GameView(GameMode.SINGLE)
         }
     }
 }
@@ -30,7 +31,7 @@ fun DoublePlayerAppPreview() {
         Surface(
             modifier = Modifier.width(windowWidth).height(windowHeight)
         ) {
-            TicTacToeApp(GameMode.DOUBLE)
+            GameView(GameMode.DOUBLE)
         }
     }
 }

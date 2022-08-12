@@ -44,6 +44,8 @@ const val BOT_WIN_TEXT = "The bot wins!"
 const val SP_WIN_TEXT = "You win!"
 const val DRAW_TEXT = "No winner"
 val gridWidth = 320.dp
+const val EASY_DELAY = 1000L
+const val HARD_DELAY = 1800L
 
 // Scores
 const val PX_TEXT = "PLAYER X:"

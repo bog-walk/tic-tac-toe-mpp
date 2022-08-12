@@ -1,22 +1,22 @@
-package dev.bogwalk.ui
+package dev.bogwalk.ui.views
 
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import dev.bogwalk.common.TicTacToeApp
+import dev.bogwalk.common.ui.views.GameView
 import dev.bogwalk.common.model.Cell
 import dev.bogwalk.common.model.GameMode
 import dev.bogwalk.common.ui.style.*
 import org.junit.Rule
 import org.junit.Test
 
-internal class TicTacToeAppTest {
+internal class GameViewTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
-    fun `TicTacToeApp runs correctly in double player mode`() {
+    fun `GameView runs correctly in double player mode`() {
         composeTestRule.setContent {
-            TicTacToeApp(GameMode.DOUBLE)
+            GameView(GameMode.DOUBLE)
         }
 
         // initial set up as expected
@@ -110,9 +110,3 @@ internal class TicTacToeAppTest {
         composeTestRule.onNodeWithText(RESET_BUTTON_TEXT).assertIsNotEnabled()
     }
 }
-
-
-
-
-
-

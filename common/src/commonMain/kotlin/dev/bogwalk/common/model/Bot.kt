@@ -1,19 +1,16 @@
 package dev.bogwalk.common.model
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+
 /**
  * Bot can only access an immutable encapsulated Grid for analysis.
  */
 class Bot(
     private val grid: Grid
 ) {
-    var mode = BotMode.EASY
-        private set
-
-    // Should this be pulled out?
-    fun toggleMode(): BotMode {
-        mode = mode.toggle()
-        return mode
-    }
+    var mode by mutableStateOf(BotMode.EASY)
 
     /**
      * Returns 0-indexed Cell coordinates (row, col) of Bot's chosen move.
