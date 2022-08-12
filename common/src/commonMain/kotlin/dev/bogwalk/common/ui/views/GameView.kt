@@ -16,7 +16,10 @@ import dev.bogwalk.common.ui.style.HARD_DELAY
 import kotlinx.coroutines.delay
 
 @Composable
-fun GameView(mode: GameMode) {
+fun GameView(
+    mode: GameMode,
+    onHomeRequest: () -> Unit
+) {
     val t3AppState = remember { T3AppState(mode) }
 
     val history = produceState(
@@ -42,8 +45,9 @@ fun GameView(mode: GameMode) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Header(
-            t3AppState.botMode,
+            onHomeRequest,
             history.value.instruction,
+            t3AppState.botMode,
             t3AppState::toggleBot
         )
         Scores(

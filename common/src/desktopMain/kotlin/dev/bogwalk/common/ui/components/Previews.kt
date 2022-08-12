@@ -2,15 +2,12 @@ package dev.bogwalk.common.ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.bogwalk.common.model.*
 import dev.bogwalk.common.ui.style.*
-import dev.bogwalk.common.ui.views.EntryView
 
 @Preview
 @Composable
@@ -92,24 +89,12 @@ private fun HeaderPreview() {
         Column(
             modifier = Modifier.width(windowWidth)
         ) {
-            Header(BotMode.HARD, BOT_MOVE_TEXT) {}
-            Header(BotMode.EASY, BOT_WIN_TEXT) {}
-            Header(BotMode.HARD, SP_MOVE_TEXT) {}
-            Header(BotMode.EASY, SP_WIN_TEXT) {}
-            Header(null, DRAW_TEXT) {}
-            Header(null, "Player X wins!") {}
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun EntryViewPreview() {
-    T3Theme {
-        Surface(
-            modifier = Modifier.width(windowWidth).height(windowHeight)
-        ) {
-            EntryView()
+            Header({}, BOT_MOVE_TEXT, BotMode.HARD) {}
+            Header({}, BOT_WIN_TEXT, BotMode.EASY) {}
+            Header({}, SP_MOVE_TEXT, BotMode.HARD) {}
+            Header({}, SP_WIN_TEXT, BotMode.EASY) {}
+            Header({}, DRAW_TEXT, null) {}
+            Header({}, "Player X wins!", null) {}
         }
     }
 }

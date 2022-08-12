@@ -10,11 +10,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
+import dev.bogwalk.common.model.GameMode
 import dev.bogwalk.common.ui.components.getPainter
 import dev.bogwalk.common.ui.style.*
 
 @Composable
-fun EntryView() {
+fun EntryView(onOptionClick: (GameMode) -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -28,11 +29,13 @@ fun EntryView() {
         )
         OptionsButton(
             PLAYER_ICON to PLAYER_DESCRIPTION,
-            PLAYER_ICON to PLAYER_DESCRIPTION
+            PLAYER_ICON to PLAYER_DESCRIPTION,
+            onOptionClick
         )
         OptionsButton(
             PLAYER_ICON to PLAYER_DESCRIPTION,
-            BOT_ICON to BOT_DESCRIPTION
+            BOT_ICON to BOT_DESCRIPTION,
+            onOptionClick
         )
     }
 }
@@ -40,7 +43,8 @@ fun EntryView() {
 @Composable
 private fun OptionsButton(
     option1: Pair<String, String>,
-    option2: Pair<String, String>
+    option2: Pair<String, String>,
+    onOptionClick: (GameMode) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -49,7 +53,9 @@ private fun OptionsButton(
             .clickable(
                 onClickLabel = OPTIONS_DESCRIPTION,
                 role = Role.Button
-            ) {},
+            ) { onOptionClick(
+                if (option2.second == BOT_DESCRIPTION) GameMode.SINGLE else GameMode.DOUBLE)
+              },
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

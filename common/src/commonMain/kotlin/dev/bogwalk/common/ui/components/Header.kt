@@ -14,8 +14,9 @@ import dev.bogwalk.common.ui.style.*
 
 @Composable
 fun Header(
-    botMode: BotMode?,
+    onHomeRequest: () -> Unit,
     instruction: String,
+    botMode: BotMode?,
     onToggleRequest: () -> Unit
 ) {
     TopAppBar(
@@ -29,7 +30,7 @@ fun Header(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = {},
+                onClick = onHomeRequest,
                 modifier = Modifier.alpha(ContentAlpha.high)
             ) {
                 Icon(

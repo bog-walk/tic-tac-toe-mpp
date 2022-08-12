@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
 import dev.bogwalk.common.ui.style.*
 
 @Composable
@@ -22,7 +23,7 @@ fun Scores(
     p2IsBot: Boolean
 ) {
     Column(
-        modifier = Modifier.padding(componentPadding),
+        modifier = Modifier.padding(top = 8.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

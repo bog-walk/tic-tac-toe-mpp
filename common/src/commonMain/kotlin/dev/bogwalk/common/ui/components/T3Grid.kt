@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dev.bogwalk.common.model.Cell
 import dev.bogwalk.common.model.GameState
-import dev.bogwalk.common.ui.style.componentPadding
 
 @Composable
 fun T3Grid(
@@ -16,7 +16,7 @@ fun T3Grid(
     onCellChosen: (Pair<Int, Int>) -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(componentPadding).fillMaxWidth(),
+        modifier = Modifier.padding(top = 8.dp, bottom = 8.dp).fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

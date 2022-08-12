@@ -15,7 +15,7 @@ internal class HeaderTest {
     @Test
     fun `Header loads correctly in single player`() {
         composeTestRule.setContent {
-            Header(BotMode.EASY, BOT_MOVE_TEXT) {}
+            Header({}, BOT_MOVE_TEXT, BotMode.EASY) {}
         }
         composeTestRule
             .onNodeWithContentDescription(HOME_DESCRIPTION)
@@ -33,7 +33,7 @@ internal class HeaderTest {
     @Test
     fun `Header loads correctly in double player`() {
         composeTestRule.setContent {
-            Header(null, DRAW_TEXT) {}
+            Header({}, DRAW_TEXT, null) {}
         }
         composeTestRule
             .onNodeWithContentDescription(HOME_DESCRIPTION)

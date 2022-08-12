@@ -16,7 +16,7 @@ internal class GameViewTest {
     @Test
     fun `GameView runs correctly in double player mode`() {
         composeTestRule.setContent {
-            GameView(GameMode.DOUBLE)
+            GameView(GameMode.DOUBLE) {}
         }
 
         // initial set up as expected

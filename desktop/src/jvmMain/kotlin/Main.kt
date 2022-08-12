@@ -1,11 +1,15 @@
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.WindowState
-import androidx.compose.ui.window.application
-import dev.bogwalk.common.ui.views.GameView
-import dev.bogwalk.common.model.GameMode
+import androidx.compose.ui.window.*
+import dev.bogwalk.common.ui.components.ExitDialog
 import dev.bogwalk.common.ui.style.*
+import dev.bogwalk.common.ui.views.EntryView
+import dev.bogwalk.common.ui.views.GameView
+import dev.bogwalk.common.ui.views.Screen
 
 fun main() = application {
     Window(
@@ -15,8 +19,25 @@ fun main() = application {
         icon = painterResource(WINDOW_ICON),
         resizable = false
     ) {
+        var screenState by remember { mutableStateOf<Screen>(Screen.Entry) }
+        var isAskingToGoHome by remember { mutableStateOf(false) }
+
         T3Theme {
-            GameView(GameMode.SINGLE)
+            when (val screen = screenState) {
+                is Screen.Entry -> EntryView { screenState = Screen.Game(mode = it) }
+                is Screen.Game -> {
+                    if (isAskingToGoHome) {
+                        ExitDialog(
+                            onCloseRequest = { isAskingToGoHome = false },
+                            onConfirm = {
+                                screenState = Screen.Entry
+                                isAskingToGoHome = false
+                            }
+                        )
+                    }
+                    GameView(screen.mode) { isAskingToGoHome = true }
+                }
+            }
         }
     }
 }

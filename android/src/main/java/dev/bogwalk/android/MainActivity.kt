@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             T3Theme {
-                GameView(GameMode.DOUBLE)
+                GameView(GameMode.DOUBLE) {}
             }
         }
     }

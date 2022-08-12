@@ -19,6 +19,13 @@ const val CELL_TEST_TAG = "grid cell"
 // Common dimensions & values
 val componentPadding = 15.dp
 val iconSize = 30.dp
+const val DIALOG_TEXT = "Scores will be lost"
+const val DIALOG_CONFIRM_TEXT = "CONFIRM"
+val dialogWidth = 300.dp
+val dialogHeight = 250.dp
+const val WARNING_ICON = "t3_warning.svg"
+const val WARNING_DESCRIPTION = "Warning icon"
+val dialogButtonBorder = 2.dp
 
 // Bot
 const val BOT_ICON = "t3_bot.svg"
