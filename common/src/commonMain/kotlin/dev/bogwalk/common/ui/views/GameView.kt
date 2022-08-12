@@ -10,10 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.bogwalk.common.model.BotMode
 import dev.bogwalk.common.model.GameMode
-import dev.bogwalk.common.ui.components.Header
-import dev.bogwalk.common.ui.components.ResetButton
-import dev.bogwalk.common.ui.components.Scores
-import dev.bogwalk.common.ui.components.T3Grid
+import dev.bogwalk.common.ui.components.*
 import dev.bogwalk.common.ui.style.EASY_DELAY
 import dev.bogwalk.common.ui.style.HARD_DELAY
 import kotlinx.coroutines.delay

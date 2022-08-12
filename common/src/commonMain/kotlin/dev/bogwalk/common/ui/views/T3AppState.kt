@@ -4,7 +4,7 @@ import androidx.compose.runtime.*
 import dev.bogwalk.common.model.*
 import dev.bogwalk.common.ui.style.*
 
-class T3AppState(
+internal class T3AppState(
     private val mode: GameMode
 ) {
     private val grid = Grid()
