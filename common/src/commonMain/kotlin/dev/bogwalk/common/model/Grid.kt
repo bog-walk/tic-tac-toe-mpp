@@ -8,22 +8,20 @@ class Grid(
     elements: String = ""
 ) {
     private val _cells = if (elements.isEmpty()) {
-        List(3) { MutableList(3) { Cell.EMPTY } }
+        List(3) { row -> MutableList(3) { col -> Cell(row to col) } }
     } else {
         List(3) { row -> MutableList(3) { col ->
             when (val ch = elements[row * 3 + col % 3].toString()) {
-                " " -> Cell.EMPTY
-                else -> Cell.valueOf(ch)
+                " " -> Cell(row to col)
+                else -> Cell(row to col, Mark.valueOf(ch), false)
             }
         } }
     }
+    val cells: List<Cell>
+        get() = _cells.flatten()
 
     override fun toString(): String {
-        return _cells.flatten().stringify()
-    }
-
-    private fun List<Cell>.stringify(): String {
-        return this.joinToString("") { it.mark.toString() }
+        return cells.joinToString("") { it.mark.toString() }
     }
 
     /**
@@ -35,8 +33,10 @@ class Grid(
      */
     fun mark(row: Int, col: Int, player: Player) {
         require(row in 0..2 && col in 0..2) { "Invalid cell coordinates" }
-        require(_cells[row][col] == Cell.EMPTY) { "Cell already occupied" }
-        _cells[row][col] = Cell.valueOf(player.name)
+        require(_cells[row][col].mark == Mark.EMPTY) { "Cell already occupied" }
+        _cells[row][col] = _cells[row][col].copy(
+            mark = Mark.valueOf(player.name), isEnabled = false
+        )
     }
 
     /**
@@ -45,9 +45,13 @@ class Grid(
      * for current player.
      */
     fun findWinner(): Boolean {
+        val winning = listOf("XXX", "OOO")
         val combos = allRows().iterator()
         while (combos.hasNext()) {
-            if (combos.next().first in listOf("XXX", "OOO")) return true
+            //if (combos.next().first in listOf("XXX", "OOO")) return true
+            if (combos.next().joinToString("") { it.mark.toString() } in winning) {
+                return true
+            }
         }
         return false
     }
@@ -60,20 +64,28 @@ class Grid(
      * indices).
      */
     fun allRows() = sequence {
-        for (row in diagonals() zip listOf(listOf(0, 4, 8), listOf(2, 4, 6))) {
+        //for (row in diagonals() zip listOf(listOf(0, 4, 8), listOf(2, 4, 6))) {
+        for (row in diagonals()) {
             yield(row)
         }
-        for ((i, row) in _cells.withIndex()) {
-            yield(row.stringify() to listOf(i * 3, i * 3 + 1, i * 3 + 2))
+        //for ((i, row) in _cells.withIndex()) {
+        for (row in _cells) {
+            //yield(row.stringify() to listOf(i * 3, i * 3 + 1, i * 3 + 2))
+            yield(row)
         }
-        for ((i, row) in transpose().withIndex()) {
-            yield(row.stringify() to listOf(i, i + 3, i + 6))
+        //for ((i, row) in transpose().withIndex()) {
+        for (row in transpose()) {
+            //yield(row.stringify() to listOf(i, i + 3, i + 6))
+            yield(row)
         }
     }
 
-    private fun diagonals(): List<String> {
-        val principal = List(3) { _cells[it][it] }.stringify()
-        val secondary = List(3) { _cells[it][2-it] }.stringify()
+    //private fun diagonals(): List<String> {
+    private fun diagonals(): List<List<Cell>> {
+        //val principal = List(3) { _cells[it][it] }.stringify()
+        //val secondary = List(3) { _cells[it][2-it] }.stringify()
+        val principal = List(3) { _cells[it][it] }
+        val secondary = List(3) { _cells[it][2-it] }
         return listOf(principal, secondary)
     }
 
@@ -82,26 +94,25 @@ class Grid(
     }
 
     /**
-     * Returns the index (0 to 8 for flattened grid) of the first occurrence of the specified
-     * mark, or -1 if the mark is not present in the grid.
+     * Returns the coordinates of the first occurrence of the specified mark, or null if the mark
+     * is not present in the grid.
      */
-    fun indexOf(mark: String): Int {
-        return _cells.flatten().indexOf(Cell.valueOf(mark))
+    fun coordinatesOf(mark: String): Pair<Int, Int>? {
+        //return _cells.flatten().indexOf(Cell.valueOf(mark))
+        return cells.firstOrNull { it.mark == Mark.valueOf(mark) }?.coordinates
     }
 
     /**
-     * Returns a List of the indices (0 to 8 for flattened grid) of all cells that are empty.
+     * Returns a List of all Cells that are empty.
      */
-    fun findEmptySpots(): List<Int> {
-        return _cells.flatten().mapIndexedNotNull { i, cell ->
-            if (cell == Cell.EMPTY) i else null
-        }
+    fun findEmptyCells(): List<Cell> {
+        return cells.filter { it.mark == Mark.EMPTY }
     }
 
     fun clear() {
         for (r in 0..2) {
             for (c in 0..2) {
-                _cells[r][c] = Cell.EMPTY
+                _cells[r][c] = Cell(r to c)
             }
         }
     }

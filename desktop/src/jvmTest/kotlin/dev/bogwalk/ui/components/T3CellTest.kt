@@ -6,6 +6,7 @@ import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import dev.bogwalk.common.model.Cell
+import dev.bogwalk.common.model.Mark
 import dev.bogwalk.common.model.GameState
 import dev.bogwalk.common.ui.components.T3Cell
 import org.junit.Rule
@@ -17,16 +18,16 @@ internal class T3CellTest {
 
     @Test
     fun `T3Cell is disabled when marked`() {
-        val mark = mutableStateOf(Cell.EMPTY)
+        val cell = mutableStateOf(Cell(0 to 0))
         composeTestRule.setContent {
-            T3Cell(GameState.PLAYING, mark.value, 0 to 0) {}
+            T3Cell(GameState.PLAYING, cell.value) {}
         }
         composeTestRule
             .onNodeWithText(" ")
             .assertExists("Empty cell not found")
             .assertIsEnabled()
 
-        mark.value = Cell.X
+        cell.value = Cell(0 to 0, Mark.X, false)
         composeTestRule.waitForIdle()
 
         composeTestRule
@@ -39,7 +40,7 @@ internal class T3CellTest {
     fun `T3Cell is disabled when game over`() {
         val state = mutableStateOf(GameState.PLAYING)
         composeTestRule.setContent {
-            T3Cell(state.value, Cell.EMPTY, 0 to 0) {}
+            T3Cell(state.value, Cell(0 to 0)) {}
         }
         composeTestRule
             .onNodeWithText(" ")

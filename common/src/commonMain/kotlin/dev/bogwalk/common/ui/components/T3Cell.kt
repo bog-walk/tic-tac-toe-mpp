@@ -8,27 +8,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import dev.bogwalk.common.model.Cell
+import dev.bogwalk.common.model.Mark
 import dev.bogwalk.common.model.GameState
+import dev.bogwalk.common.model.Cell
 import dev.bogwalk.common.ui.style.*
 
 @Composable
 fun T3Cell(
     gameState: GameState,
     cell: Cell,
-    coordinates: Pair<Int, Int>,
     onCellChosen: (Pair<Int, Int>) -> Unit
 ) {
     Button(
-        onClick = { onCellChosen(coordinates) },
+        onClick = { onCellChosen(cell.coordinates) },
         modifier = Modifier
             .testTag(CELL_TEST_TAG)
-            .padding(cellPadding)
+            .padding(smallPadding)
             .requiredSize(cellSize),
-        enabled = gameState == GameState.PLAYING && cell == Cell.EMPTY,
+        enabled = gameState == GameState.PLAYING && cell.isEnabled,
         elevation = ButtonDefaults.elevation(defaultElevation = cellElevation),
         shape = MaterialTheme.shapes.medium,
-        colors = getButtonColors(cell, gameState)
+        colors = getButtonColors(cell.mark, gameState)
     ) {
         Text(
             text = cell.mark.toString(),
@@ -41,11 +41,11 @@ fun T3Cell(
 
 @Composable
 private fun getButtonColors(
-    cell: Cell,
+    mark: Mark,
     gameState: GameState
 ): ButtonColors {
-    return when (cell) {
-        Cell.EMPTY -> {
+    return when (mark) {
+        Mark.EMPTY -> {
             when (gameState) {
                 GameState.PLAYING -> ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colors.onBackground
@@ -53,13 +53,13 @@ private fun getButtonColors(
                 else -> ButtonDefaults.buttonColors()
             }
         }
-        Cell.X -> {
+        Mark.X -> {
             ButtonDefaults.buttonColors(
                 disabledBackgroundColor = MaterialTheme.colors.primary,
                 disabledContentColor = MaterialTheme.colors.onSurface
             )
         }
-        Cell.O -> {
+        Mark.O -> {
             ButtonDefaults.buttonColors(
                 disabledBackgroundColor = MaterialTheme.colors.secondary,
                 disabledContentColor = MaterialTheme.colors.onSurface

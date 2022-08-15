@@ -22,7 +22,7 @@ fun EntryView(onOptionClick: (GameMode) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = WINDOW_TITLE,
+            text = APP_TITLE,
             modifier = Modifier.padding(componentPadding),
             color = MaterialTheme.colors.onSurface,
             style = MaterialTheme.typography.h3

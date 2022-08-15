@@ -48,7 +48,7 @@ actual fun ExitDialog(
                 )
             ) {
                 Text(
-                    text = DIALOG_CONFIRM_TEXT,
+                    text = DIALOG_BUTTON_TEXT,
                     style = MaterialTheme.typography.button
                 )
             }

@@ -14,10 +14,10 @@ import dev.bogwalk.common.ui.style.*
 private fun T3CellPreview() {
     T3Theme {
         Column {
-            T3Cell(GameState.PLAYING, Cell.EMPTY, 0 to 0) {}
-            T3Cell(GameState.PLAYING, Cell.X, 1 to 1) {}
-            T3Cell(GameState.PLAYING, Cell.O, 2 to 2) {}
-            T3Cell(GameState.OVER_DRAW, Cell.EMPTY, 0 to 0) {}
+            T3Cell(GameState.PLAYING, Cell(0 to 0)) {}
+            T3Cell(GameState.PLAYING, Cell(0 to 0, Mark.X, false)) {}
+            T3Cell(GameState.PLAYING, Cell(0 to 0, Mark.O, false)) {}
+            T3Cell(GameState.OVER_DRAW, Cell(0 to 0)) {}
         }
     }
 }
@@ -25,16 +25,28 @@ private fun T3CellPreview() {
 @Preview
 @Composable
 private fun T3GridInPlayPreview() {
+    val board = listOf(
+        Cell(0 to 0, Mark.X, false), Cell(0 to 1, Mark.O, false),
+        Cell(0 to 2, Mark.X, false), Cell(1 to 0),
+        Cell(1 to 1, Mark.O, false), Cell(1 to 2), Cell(2 to 0),
+        Cell(2 to 1), Cell(2 to 2, Mark.X, false)
+    )
     T3Theme {
-        T3Grid(GameState.PLAYING, "XOX OX  X") {}
+        T3Grid(GameState.PLAYING, board) {}
     }
 }
 
 @Preview
 @Composable
 private fun T3GridWhenOverPreview() {
+    val board = listOf(
+        Cell(0 to 0, Mark.X, false), Cell(0 to 1, Mark.X, false),
+        Cell(0 to 2, Mark.X, false), Cell(1 to 0), Cell(1 to 1),
+        Cell(1 to 2), Cell(2 to 0, Mark.O, false), Cell(2 to 1),
+        Cell(2 to 2, Mark.O, false)
+    )
     T3Theme {
-        T3Grid(GameState.OVER_WINNER, "XXX   O O") {}
+        T3Grid(GameState.OVER_WINNER, board) {}
     }
 }
 

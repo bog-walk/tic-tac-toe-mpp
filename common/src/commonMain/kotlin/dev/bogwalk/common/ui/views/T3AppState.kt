@@ -20,7 +20,7 @@ internal class T3AppState(
     private var player2Streak = 0
 
     var history by mutableStateOf(listOf(
-        TurnState(instruction = getInstruction(), board = grid.toString())
+        TurnState(instruction = getInstruction(), board = grid.cells)
     ))
         private set
 
@@ -74,14 +74,14 @@ internal class T3AppState(
                 }
                 GameState.OVER_WINNER
             }
-            grid.findEmptySpots().isEmpty() -> GameState.OVER_DRAW
+            grid.findEmptyCells().isEmpty() -> GameState.OVER_DRAW
             else -> {
                 turn = turn.next()
                 GameState.PLAYING
             }
         }
         return TurnState(
-            gameState, getInstruction(), grid.toString(), player1Streak, player2Streak
+            gameState, getInstruction(), grid.cells, player1Streak, player2Streak
         )
     }
 
@@ -91,7 +91,7 @@ internal class T3AppState(
         gameState = GameState.PLAYING
         history = listOf(
             TurnState(
-            instruction = getInstruction(), board = grid.toString(),
+            instruction = getInstruction(), board = grid.cells,
             player1Streak = player1Streak, player2Streak = player2Streak
         ))
     }

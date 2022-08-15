@@ -14,10 +14,10 @@ internal class EntryViewTest {
     @Test
     fun `EntryView loads correctly`() {
         composeTestRule.setContent {
-            EntryView()
+            EntryView {}
         }
         composeTestRule
-            .onNodeWithText(WINDOW_TITLE)
+            .onNodeWithText(APP_TITLE)
             .assertExists("Title text missing")
         composeTestRule
             .onAllNodesWithContentDescription(PLAYER_DESCRIPTION, useUnmergedTree = true)

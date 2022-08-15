@@ -5,18 +5,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import dev.bogwalk.common.model.Cell
 import dev.bogwalk.common.model.GameState
+import dev.bogwalk.common.model.Cell
+import dev.bogwalk.common.ui.style.smallPadding
 
 @Composable
 fun T3Grid(
     gameState: GameState,
-    board: String,
+    board: List<Cell>,
     onCellChosen: (Pair<Int, Int>) -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(top = 8.dp, bottom = 8.dp).fillMaxWidth(),
+        modifier = Modifier.padding(top = smallPadding, bottom = smallPadding).fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -27,12 +27,7 @@ fun T3Grid(
             ) {
                 for (col in 0..2) {
                     key("$row$col") {
-                        T3Cell(
-                            gameState,
-                            Cell.fromChar(board[row * 3 + col]),
-                            row to col,
-                            onCellChosen
-                        )
+                        T3Cell(gameState, board[row * 3 + col], onCellChosen)
                     }
                 }
             }

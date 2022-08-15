@@ -120,15 +120,17 @@ internal class GridTest {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        val expectedMarks = listOf("XO ", "XOO", "XXX", " O ", "OO ", "X O")
-        val expectedIndices = listOf(
-            listOf(0, 4, 8), listOf(2, 4, 6),
-            listOf(0, 1, 2), listOf(3, 4, 5), listOf(6, 7, 8),
-            listOf(0, 3, 6)
+        val expectedRows = listOf(
+            listOf(Cell(0 to 0, Mark.X, false), Cell(1 to 1, Mark.O, false),
+                Cell(2 to 2)),
+            listOf(Cell(0 to 2, Mark.X, false), Cell(1 to 1, Mark.O, false),
+                Cell(2 to 0, Mark.O, false)),
+            listOf(Cell(0 to 0, Mark.X, false), Cell(0 to 1, Mark.X, false),
+                Cell(0 to 2, Mark.X, false)),
+            listOf(Cell(1 to 0), Cell(1 to 1, Mark.O, false), Cell(1 to 2))
         )
-        val actual = grid.allRows().take(6).toList()
-        assertContentEquals(expectedMarks, actual.unzip().first)
-        assertContentEquals(expectedIndices, actual.unzip().second)
+        val actual = grid.allRows().take(4).toList()
+        assertContentEquals(expectedRows, actual)
     }
 
     @Test
@@ -139,33 +141,36 @@ internal class GridTest {
         }
         val grid = Grid(input)
         // but X should be caught first based on function implementation (i.e. yield order)
-        val expected = "XXX" to listOf(0, 1, 2)
-        var actual = "" to emptyList<Int>()
+        val expected = listOf(
+            Cell(0 to 0, Mark.X, false), Cell(0 to 1, Mark.X, false),
+            Cell(0 to 2, Mark.X, false)
+        )
+        var actual = emptyList<Cell>()
         val iter = grid.allRows().iterator()
         while (iter.hasNext()) {
             actual = iter.next()
-            if (actual.first in listOf("OOO", "XXX")) break
+            if (actual.joinToString("") { it.mark.toString() } in listOf("OOO", "XXX")) break
         }
         assertEquals(expected, actual)
     }
 
     @Test
-    fun `indexOf() correctly returns -1 if mark absent`() {
+    fun `coordinatesOf() correctly returns null if mark absent`() {
         val input = "X        ".also {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertEquals(-1, grid.indexOf("O"))
+        assertNull(grid.coordinatesOf("O"))
     }
 
     @Test
-    fun `indexOf() correctly finds only first occurrence`() {
+    fun `coordinatesOf() correctly finds only first occurrence`() {
         val input = "  O XXO  ".also {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertEquals(4, grid.indexOf("X"))
-        assertEquals(2, grid.indexOf("O"))
+        assertEquals(1 to 1, grid.coordinatesOf("X"))
+        assertEquals(0 to 2, grid.coordinatesOf("O"))
     }
 
     @Test
@@ -174,7 +179,7 @@ internal class GridTest {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertTrue { grid.findEmptySpots().isEmpty() }
+        assertTrue { grid.findEmptyCells().isEmpty() }
     }
 
     @Test
@@ -183,8 +188,8 @@ internal class GridTest {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        val expected = listOf(3, 5, 8)
-        assertContentEquals(expected, grid.findEmptySpots())
+        val expected = listOf(Cell(1 to 0), Cell(1 to 2), Cell(2 to 2))
+        assertContentEquals(expected, grid.findEmptyCells())
     }
 
     @Test

@@ -1,13 +1,15 @@
 package dev.bogwalk.common.model
 
-enum class Cell(val mark: Char) {
+enum class Mark(val mark: Char) {
     X('X'),
     O('O'),
     EMPTY(' ');
 
     companion object {
-        fun fromChar(ch: Char): Cell = values().find { it.mark == ch }!!
+        fun fromChar(ch: Char): Mark = values().find { it.mark == ch }!!
     }
+
+    override fun toString(): String = this.mark.toString()
 }
 
 enum class Player {

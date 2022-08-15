@@ -15,8 +15,8 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         state = WindowState(size = DpSize(windowWidth, windowHeight)),
-        title = WINDOW_TITLE,
-        icon = painterResource(WINDOW_ICON),
+        title = APP_TITLE,
+        icon = painterResource(APP_ICON),
         resizable = false
     ) {
         var screenState by remember { mutableStateOf<Screen>(Screen.Entry) }
