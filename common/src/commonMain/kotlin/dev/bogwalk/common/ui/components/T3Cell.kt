@@ -47,8 +47,10 @@ private fun getButtonColors(
     return when (mark) {
         Mark.EMPTY -> {
             when (gameState) {
-                GameState.PLAYING -> ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colors.onBackground
+                // even though Cells are disabled when Bot is moving, they should look enabled
+                GameState.PLAYING, GameState.BOT_TURN -> ButtonDefaults.buttonColors(
+                    backgroundColor = MaterialTheme.colors.onBackground,
+                    disabledBackgroundColor = MaterialTheme.colors.onBackground
                 )
                 else -> ButtonDefaults.buttonColors()
             }

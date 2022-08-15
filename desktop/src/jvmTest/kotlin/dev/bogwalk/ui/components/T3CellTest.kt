@@ -22,6 +22,7 @@ internal class T3CellTest {
         composeTestRule.setContent {
             T3Cell(GameState.PLAYING, cell.value) {}
         }
+
         composeTestRule
             .onNodeWithText(" ")
             .assertExists("Empty cell not found")
@@ -37,11 +38,33 @@ internal class T3CellTest {
     }
 
     @Test
+    fun `T3Cell is disabled when bot is moving`() {
+        val state = mutableStateOf(GameState.PLAYING)
+        composeTestRule.setContent {
+            T3Cell(state.value, Cell(0 to 0)) {}
+        }
+
+        composeTestRule
+            .onNodeWithText(" ")
+            .assertExists("Empty cell not found")
+            .assertIsEnabled()
+
+        state.value = GameState.BOT_TURN
+        composeTestRule.waitForIdle()
+
+        composeTestRule
+            .onNodeWithText(" ")
+            .assertExists("Empty cell not found")
+            .assertIsNotEnabled()
+    }
+
+    @Test
     fun `T3Cell is disabled when game over`() {
         val state = mutableStateOf(GameState.PLAYING)
         composeTestRule.setContent {
             T3Cell(state.value, Cell(0 to 0)) {}
         }
+
         composeTestRule
             .onNodeWithText(" ")
             .assertExists("Empty cell not found")

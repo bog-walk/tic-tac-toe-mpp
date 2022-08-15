@@ -1,9 +1,7 @@
 package dev.bogwalk.common.ui.components
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.*
@@ -13,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.dp
 import dev.bogwalk.common.ui.style.*
 
 @Composable
@@ -23,7 +20,7 @@ fun Scores(
     p2IsBot: Boolean
 ) {
     Column(
-        modifier = Modifier.padding(top = 8.dp),
+        modifier = Modifier.padding(top = smallPadding),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

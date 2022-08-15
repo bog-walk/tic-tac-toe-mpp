@@ -21,7 +21,7 @@ fun ResetButton(
     ) {
         Button(
             onClick = { onReplayRequest() },
-            enabled = gameState != GameState.PLAYING,
+            enabled = gameState == GameState.OVER_WINNER || gameState == GameState.OVER_DRAW,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = MaterialTheme.colors.secondaryVariant,
                 contentColor = MaterialTheme.colors.onSurface

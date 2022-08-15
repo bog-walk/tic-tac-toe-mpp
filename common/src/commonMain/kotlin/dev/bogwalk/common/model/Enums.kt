@@ -5,10 +5,6 @@ enum class Mark(val mark: Char) {
     O('O'),
     EMPTY(' ');
 
-    companion object {
-        fun fromChar(ch: Char): Mark = values().find { it.mark == ch }!!
-    }
-
     override fun toString(): String = this.mark.toString()
 }
 
@@ -36,9 +32,9 @@ enum class BotMode {
     }
 }
 
-// Should OVER_WINNER be separated based on winner?
 enum class GameState {
     PLAYING,
+    BOT_TURN,
     OVER_WINNER,
     OVER_DRAW
 }

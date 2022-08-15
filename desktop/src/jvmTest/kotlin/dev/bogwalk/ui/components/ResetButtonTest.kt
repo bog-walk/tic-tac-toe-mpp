@@ -1,5 +1,6 @@
 package dev.bogwalk.ui.components
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -16,9 +17,18 @@ internal class ResetButtonTest {
 
     @Test
     fun `ResetButton is disabled during game play`() {
+        val state = mutableStateOf(GameState.PLAYING)
         composeTestRule.setContent {
-            ResetButton(GameState.PLAYING) {}
+            ResetButton(state.value) {}
         }
+        composeTestRule
+            .onNodeWithText(RESET_BUTTON_TEXT)
+            .assertExists("ResetButton not found")
+            .assertIsNotEnabled()
+
+        state.value = GameState.BOT_TURN
+        composeTestRule.waitForIdle()
+
         composeTestRule
             .onNodeWithText(RESET_BUTTON_TEXT)
             .assertExists("ResetButton not found")

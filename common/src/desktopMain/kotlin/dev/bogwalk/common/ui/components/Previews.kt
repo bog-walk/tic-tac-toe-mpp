@@ -18,6 +18,8 @@ private fun T3CellPreview() {
             T3Cell(GameState.PLAYING, Cell(0 to 0, Mark.X, false)) {}
             T3Cell(GameState.PLAYING, Cell(0 to 0, Mark.O, false)) {}
             T3Cell(GameState.OVER_DRAW, Cell(0 to 0)) {}
+            T3Cell(GameState.BOT_TURN, Cell(0 to 0)) {}
+            T3Cell(GameState.BOT_TURN, Cell(0 to 0, Mark.X, false)) {}
         }
     }
 }
@@ -33,6 +35,20 @@ private fun T3GridInPlayPreview() {
     )
     T3Theme {
         T3Grid(GameState.PLAYING, board) {}
+    }
+}
+
+@Preview
+@Composable
+private fun T3GridDuringBotTurnPreview() {
+    val board = listOf(
+        Cell(0 to 0, Mark.X, false), Cell(0 to 1, Mark.O, false),
+        Cell(0 to 2, Mark.X, false), Cell(1 to 0),
+        Cell(1 to 1, Mark.O, false), Cell(1 to 2), Cell(2 to 0),
+        Cell(2 to 1), Cell(2 to 2, Mark.X, false)
+    )
+    T3Theme {
+        T3Grid(GameState.BOT_TURN, board) {}
     }
 }
 

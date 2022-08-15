@@ -27,12 +27,10 @@ internal class T3AppState(
     private fun getInstruction(): String {
         return when (gameState) {
             GameState.PLAYING -> when (mode) {
-                GameMode.SINGLE -> when (turn) {
-                    Player.X -> SP_MOVE_TEXT
-                    Player.O -> BOT_MOVE_TEXT
-                }
+                GameMode.SINGLE -> SP_MOVE_TEXT
                 GameMode.DOUBLE -> "Player ${turn.name} turn"
             }
+            GameState.BOT_TURN -> BOT_MOVE_TEXT
             GameState.OVER_DRAW -> DRAW_TEXT
             GameState.OVER_WINNER -> when (mode) {
                 GameMode.SINGLE -> when (turn) {
@@ -53,9 +51,11 @@ internal class T3AppState(
     fun updateGame(row: Int, col: Int) {
         grid.mark(row, col, turn)
         val currentChanges = mutableListOf(updateTurnState())
-        if (gameState == GameState.PLAYING && bot != null) {
-            val botMove = bot.move()
-            grid.mark(botMove.first, botMove.second, turn)
+        if (gameState == GameState.BOT_TURN) {
+            bot?.let {
+                val botM = it.move()
+                grid.mark(botM.first, botM.second, turn)
+            }
             currentChanges.add(updateTurnState())
         }
         history = currentChanges
@@ -77,7 +77,11 @@ internal class T3AppState(
             grid.findEmptyCells().isEmpty() -> GameState.OVER_DRAW
             else -> {
                 turn = turn.next()
-                GameState.PLAYING
+                if (bot != null && turn == Player.O) {
+                    GameState.BOT_TURN
+                } else {
+                    GameState.PLAYING
+                }
             }
         }
         return TurnState(
