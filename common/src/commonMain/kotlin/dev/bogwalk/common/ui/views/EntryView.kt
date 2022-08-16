@@ -24,7 +24,7 @@ fun EntryView(onOptionClick: (GameMode) -> Unit) {
         Text(
             text = APP_TITLE,
             modifier = Modifier.padding(componentPadding),
-            color = MaterialTheme.colors.onSurface,
+            color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.h3
         )
         OptionsButton(
@@ -54,25 +54,26 @@ private fun OptionsButton(
                 onClickLabel = OPTIONS_DESCRIPTION,
                 role = Role.Button
             ) { onOptionClick(
-                if (option2.second == BOT_DESCRIPTION) GameMode.SINGLE else GameMode.DOUBLE)
-              },
+                if (option2.second == BOT_DESCRIPTION) GameMode.SINGLE else GameMode.DOUBLE
+            ) },
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = getPainter(option1.first),
             contentDescription = option1.second,
-            modifier = Modifier.padding(componentPadding).requiredSize(iconSize)
+            modifier = Modifier.padding(componentPadding).requiredSize(iconSize),
+            tint = MaterialTheme.colors.onBackground
         )
         Text(
             text = OPTIONS_TEXT,
-            color = MaterialTheme.colors.onSurface,
             style = MaterialTheme.typography.h5
         )
         Icon(
             painter = getPainter(option2.first),
             contentDescription = option2.second,
-            modifier = Modifier.padding(componentPadding).requiredSize(iconSize)
+            modifier = Modifier.padding(componentPadding).requiredSize(iconSize),
+            tint = MaterialTheme.colors.onBackground
         )
     }
 }

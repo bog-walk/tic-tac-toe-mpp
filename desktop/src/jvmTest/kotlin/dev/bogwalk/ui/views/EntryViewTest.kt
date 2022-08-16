@@ -16,6 +16,7 @@ internal class EntryViewTest {
         composeTestRule.setContent {
             EntryView {}
         }
+
         composeTestRule
             .onNodeWithText(APP_TITLE)
             .assertExists("Title text missing")

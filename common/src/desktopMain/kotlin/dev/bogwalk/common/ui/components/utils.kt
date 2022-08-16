@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.window.Dialog
@@ -14,7 +15,7 @@ import androidx.compose.ui.window.rememberDialogState
 import dev.bogwalk.common.ui.style.*
 
 @Composable
-actual fun getPainter(res: String): Painter = androidx.compose.ui.res.painterResource(res)
+actual fun getPainter(res: String): Painter = painterResource(res)
 
 @Composable
 actual fun ExitDialog(

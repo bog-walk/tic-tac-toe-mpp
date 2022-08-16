@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import dev.bogwalk.common.model.BotMode
 import dev.bogwalk.common.model.GameMode
 import dev.bogwalk.common.ui.components.*
-import dev.bogwalk.common.ui.style.EASY_DELAY
-import dev.bogwalk.common.ui.style.HARD_DELAY
+import dev.bogwalk.common.ui.style.SHORT_DELAY
+import dev.bogwalk.common.ui.style.LONG_DELAY
 import kotlinx.coroutines.delay
 
 @Composable
@@ -22,6 +22,7 @@ fun GameView(
 ) {
     val t3AppState = remember { T3AppState(mode) }
 
+    // produces successive observable state changes with a delayed response if second player is Bot
     val history = produceState(
         initialValue = t3AppState.history.first(),
         t3AppState.history
@@ -29,10 +30,11 @@ fun GameView(
         if (t3AppState.history.size == 1) {
             value = t3AppState.history.first()
         } else {
+            // when GameMode.SINGLE, t3AppState will hold 2 TurnState instances for every turn
             value = t3AppState.history[0]
             delay(when (t3AppState.botMode) {
-                BotMode.EASY -> EASY_DELAY
-                BotMode.HARD -> HARD_DELAY
+                BotMode.EASY -> SHORT_DELAY
+                BotMode.HARD -> LONG_DELAY
                 null -> 1L
             })
             value = t3AppState.history[1]
@@ -61,8 +63,9 @@ fun GameView(
         ) { (r, c) ->
             t3AppState.updateGame(r, c)
         }
-        ResetButton(history.value.gameState) {
-            t3AppState.playAgain()
-        }
+        ResetButton(
+            history.value.gameState,
+            t3AppState::playAgain
+        )
     }
 }

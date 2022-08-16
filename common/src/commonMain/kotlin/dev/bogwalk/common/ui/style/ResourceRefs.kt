@@ -8,6 +8,7 @@ const val APP_TITLE = "Tic Tac Toe"
 const val APP_ICON = "t3_icon.svg"
 val componentPadding = 15.dp
 val smallPadding = 8.dp
+val zeroDP = 0.dp
 val iconSize = 30.dp
 
 // Desktop App Window
@@ -26,8 +27,8 @@ const val BOT_DESCRIPTION = "Bot icon"
 // BotToggle
 val togglePadding = 5.dp
 const val TOGGLE_TEST_TAG = "bot switch"
-const val EASY_DELAY = 1000L
-const val HARD_DELAY = 1800L
+const val SHORT_DELAY = 1000L
+const val LONG_DELAY = 1800L
 
 // Home
 const val HOME_ICON = "t3_home.svg"

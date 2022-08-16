@@ -17,6 +17,7 @@ internal class ScoresTest {
         composeTestRule.setContent {
             Scores(0, 0, false)
         }
+
         composeTestRule
             .onNodeWithText(PX_TEXT)
             .assertExists("Multiplayer not engaged")
@@ -34,6 +35,7 @@ internal class ScoresTest {
         composeTestRule.setContent {
             Scores(0, 0, true)
         }
+
         composeTestRule
             .onNodeWithText(PX_TEXT)
             .assertExists("Single player not engaged")
@@ -53,6 +55,7 @@ internal class ScoresTest {
         composeTestRule.setContent {
             Scores(p1Score.value, p2Score.value, true)
         }
+
         composeTestRule
             .onAllNodesWithTag(SCORE_TEST_TAG)
             .assertCountEquals(2)

@@ -30,6 +30,7 @@ val T3Colors = darkColors(
 private val T3Typography = Typography(
     defaultFontFamily = FontFamily.Monospace,
     h5 = TextStyle(
+        color = Color.White,
         fontSize = 24.sp,
         fontWeight = FontWeight.Normal,
         letterSpacing = 0.25.sp,

@@ -17,6 +17,7 @@ internal class HeaderTest {
         composeTestRule.setContent {
             Header({}, BOT_MOVE_TEXT, BotMode.EASY) {}
         }
+
         composeTestRule
             .onNodeWithContentDescription(HOME_DESCRIPTION)
             .assertExists("Home icon missing")
@@ -35,6 +36,7 @@ internal class HeaderTest {
         composeTestRule.setContent {
             Header({}, DRAW_TEXT, null) {}
         }
+
         composeTestRule
             .onNodeWithContentDescription(HOME_DESCRIPTION)
             .assertExists("Home icon missing")

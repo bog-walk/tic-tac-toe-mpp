@@ -160,7 +160,7 @@ internal class GridTest {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertNull(grid.coordinatesOf("O"))
+        assertNull(grid.coordinatesOf(Mark.O))
     }
 
     @Test
@@ -169,8 +169,8 @@ internal class GridTest {
             assertTrue { it.isValidTestInput() }
         }
         val grid = Grid(input)
-        assertEquals(1 to 1, grid.coordinatesOf("X"))
-        assertEquals(0 to 2, grid.coordinatesOf("O"))
+        assertEquals(1 to 1, grid.coordinatesOf(Mark.X))
+        assertEquals(0 to 2, grid.coordinatesOf(Mark.O))
     }
 
     @Test

@@ -25,8 +25,9 @@ class Grid(
     }
 
     /**
-     * Alters the game grid with the player's chosen move, if valid. Accepts [row] and [col] as
-     * already 0-indexed Cell coordinates.
+     * Alters the game Grid with the player's chosen move, if valid.
+     *
+     * Accepts [row] and [col] as already 0-indexed Cell coordinates.
      *
      * @throws IllegalArgumentException if coordinates are out of bounds or if the Cell is
      * already marked.
@@ -40,16 +41,15 @@ class Grid(
     }
 
     /**
-     * If a winner is found, it must be current player; otherwise, this function would have
+     * If a winner is found, it must be current Player; otherwise, this function would have
      * returned `true` on the previous assess. There is, therefore, no need to include an argument
-     * for current player.
+     * for current Player.
      */
     fun findWinner(): Boolean {
         val winning = listOf("XXX", "OOO")
-        val combos = allRows().iterator()
-        while (combos.hasNext()) {
-            //if (combos.next().first in listOf("XXX", "OOO")) return true
-            if (combos.next().joinToString("") { it.mark.toString() } in winning) {
+        val rows = allRows().iterator()
+        while (rows.hasNext()) {
+            if (rows.next().joinToString("") { it.mark.toString() } in winning) {
                 return true
             }
         }
@@ -57,33 +57,18 @@ class Grid(
     }
 
     /**
-     * Yields 3-character String representations of all row combinations, i.e. 3 rows,
-     * 3 columns, and 2 diagonals, then suspends until the next Pair is requested by the iterator.
+     * Yields List representations of every row combination, i.e. 2 diagonals, 3 rows, and 3
+     * columns, then suspends until the next List is requested by the iterator.
      *
-     * @return Pairs of (String representing cell marks, List of corresponding flattened grid
-     * indices).
+     * @return Sequence of Lists with 3 Cells each, representing a row combination in current Grid.
      */
-    fun allRows() = sequence {
-        //for (row in diagonals() zip listOf(listOf(0, 4, 8), listOf(2, 4, 6))) {
-        for (row in diagonals()) {
-            yield(row)
-        }
-        //for ((i, row) in _cells.withIndex()) {
-        for (row in _cells) {
-            //yield(row.stringify() to listOf(i * 3, i * 3 + 1, i * 3 + 2))
-            yield(row)
-        }
-        //for ((i, row) in transpose().withIndex()) {
-        for (row in transpose()) {
-            //yield(row.stringify() to listOf(i, i + 3, i + 6))
-            yield(row)
-        }
+    internal fun allRows() = sequence {
+        diagonals().forEach { yield(it) }
+        _cells.forEach { yield(it) }
+        transpose().forEach { yield(it) }
     }
 
-    //private fun diagonals(): List<String> {
     private fun diagonals(): List<List<Cell>> {
-        //val principal = List(3) { _cells[it][it] }.stringify()
-        //val secondary = List(3) { _cells[it][2-it] }.stringify()
         val principal = List(3) { _cells[it][it] }
         val secondary = List(3) { _cells[it][2-it] }
         return listOf(principal, secondary)
@@ -93,27 +78,23 @@ class Grid(
         return List(3) { row -> List(3) { col -> _cells[col][row] } }
     }
 
-    /**
-     * Returns the coordinates of the first occurrence of the specified mark, or null if the mark
-     * is not present in the grid.
-     */
-    fun coordinatesOf(mark: String): Pair<Int, Int>? {
-        //return _cells.flatten().indexOf(Cell.valueOf(mark))
-        return cells.firstOrNull { it.mark == Mark.valueOf(mark) }?.coordinates
-    }
-
-    /**
-     * Returns a List of all Cells that are empty.
-     */
     fun findEmptyCells(): List<Cell> {
         return cells.filter { it.mark == Mark.EMPTY }
     }
 
     fun clear() {
-        for (r in 0..2) {
-            for (c in 0..2) {
-                _cells[r][c] = Cell(r to c)
+        for (row in 0..2) {
+            for (col in 0..2) {
+                _cells[row][col] = Cell(row to col)
             }
         }
+    }
+
+    /**
+     * Returns the coordinates of the first occurrence of the specified Mark, or null if the Mark
+     * is not present in the Grid.
+     */
+    internal fun coordinatesOf(mark: Mark): Pair<Int, Int>? {
+        return cells.firstOrNull { it.mark == mark }?.coordinates
     }
 }

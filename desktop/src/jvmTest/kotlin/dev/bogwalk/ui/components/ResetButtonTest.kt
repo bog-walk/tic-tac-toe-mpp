@@ -21,6 +21,7 @@ internal class ResetButtonTest {
         composeTestRule.setContent {
             ResetButton(state.value) {}
         }
+
         composeTestRule
             .onNodeWithText(RESET_BUTTON_TEXT)
             .assertExists("ResetButton not found")
@@ -40,6 +41,7 @@ internal class ResetButtonTest {
         composeTestRule.setContent {
             ResetButton(GameState.OVER_WINNER) {}
         }
+
         composeTestRule
             .onNodeWithText(RESET_BUTTON_TEXT)
             .assertExists("ResetButton not found")
@@ -51,6 +53,7 @@ internal class ResetButtonTest {
         composeTestRule.setContent {
             ResetButton(GameState.OVER_DRAW) {}
         }
+
         composeTestRule
             .onNodeWithText(RESET_BUTTON_TEXT)
             .assertExists("ResetButton not found")

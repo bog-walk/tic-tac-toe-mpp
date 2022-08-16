@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId = "dev.bogwalk.android"
-        minSdk = 24
+        minSdk = 27
         targetSdk = 31
         versionCode = 1
         versionName = "1.0"

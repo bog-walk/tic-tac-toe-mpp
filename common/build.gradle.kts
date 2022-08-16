@@ -3,7 +3,7 @@ import org.jetbrains.compose.compose
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
-    id("com.android.application")
+    id("com.android.library")
 }
 
 group = "dev.bogwalk"
@@ -18,6 +18,9 @@ kotlin {
         }
     }
     sourceSets {
+        all {
+            languageSettings.optIn("kotlin.RequiresOptIn")
+        }
         val commonMain by getting {
             dependencies {
                 api(compose.runtime)
@@ -31,41 +34,25 @@ kotlin {
                 implementation(kotlin("test-junit"))
             }
         }
-        val androidMain by getting {
-            dependencies {
-                api("androidx.appcompat:appcompat:1.5.0")
-                api("androidx.core:core-ktx:1.8.0")
-            }
-        }
-        val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
-                implementation("junit:junit:4.13.2")
-            }
-        }
         val desktopMain by getting {
             dependencies {
                 api(compose.preview)
-                implementation(compose.desktop.common)
             }
         }
-        val desktopTest by getting {
+        val androidMain by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
-                implementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
-                implementation("junit:junit:4.13.2")
+                api("androidx.appcompat:appcompat:1.4.2")
+                api("androidx.core:core-ktx:1.8.0")
             }
         }
     }
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 31
 
     defaultConfig {
-        applicationId = "dev.bogwalk.common"
-        minSdk = 24
+        minSdk = 27
         targetSdk = 31
     }
 
@@ -77,7 +64,7 @@ android {
     sourceSets {
         named("main") {
             manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            res.srcDirs("src/androidMain/res")
+            res.srcDirs("src/androidMain/resources")
         }
     }
 }

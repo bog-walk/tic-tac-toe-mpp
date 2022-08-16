@@ -18,6 +18,7 @@ internal class BotToggleTest {
         composeTestRule.setContent {
             BotToggle(BotMode.EASY) {}
         }
+
         composeTestRule
             .onNodeWithContentDescription(BOT_DESCRIPTION)
             .assertExists()
@@ -33,6 +34,7 @@ internal class BotToggleTest {
         composeTestRule.setContent {
             BotToggle(null) {}
         }
+
         composeTestRule
             .onNodeWithContentDescription(BOT_DESCRIPTION)
             .assertExists()

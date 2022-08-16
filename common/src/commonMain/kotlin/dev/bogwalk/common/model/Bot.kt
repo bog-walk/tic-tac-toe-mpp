@@ -5,7 +5,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 
 /**
- * Bot can only access an immutable encapsulated Grid for analysis.
+ * Class representing a computer opponent with a toggleable difficulty setting.
+ *
+ * A move is chosen at random when BotMode.EASY (default); otherwise, a mixed offensive/defensive
+ * Strategy Pattern is used when BotMode.Hard.
+ *
+ * This class can only access an immutable, encapsulated Grid for analysis.
  */
 class Bot(
     private val grid: Grid
@@ -13,7 +18,7 @@ class Bot(
     var mode by mutableStateOf(BotMode.EASY)
 
     /**
-     * Returns 0-indexed Cell coordinates (row, col) of Bot's chosen move.
+     * Returns 0-indexed Cell coordinates (row, col) of the Bot instance's chosen move.
      */
     fun move(): Pair<Int, Int> {
         return when (mode) {
@@ -22,22 +27,20 @@ class Bot(
         }
     }
 
-    /**
-     * There is no concern of random() throwing a NoSuchElementException, as a full grid would
-     * have been caught in the previous round.
-     */
     private fun nextRandomSpot(): Pair<Int, Int> {
+        // random() will not throw NoSuchElementException, as a full Grid would have been caught
+        // in the previous turn
         return grid.findEmptyCells().random().coordinates
     }
 
     private fun hardBotNextMove(): Pair<Int, Int> {
         // assumes that Bot always moves second, as Player.O
-        return if (grid.coordinatesOf("O") == null) {
+        return if (grid.coordinatesOf(Mark.O) == null) {
             // grid would only be missing 'O' on first round
             firstMove()
         } else {
-            scanGrid(::isOffensive) ?:
-            scanGrid(::isDefensive) ?:
+            scanGrid(::beOffensive) ?:
+            scanGrid(::beDefensive) ?:
             nextRandomSpot()
         }
     }
@@ -46,10 +49,9 @@ class Bot(
         return if (Cell(1 to 1) in grid.findEmptyCells()) {
             1 to 1  // grid centre is prime spot when not first player
         } else {
-            // pick any free corner cell
+            // otherwise, pick any free corner cell
             val corners = mutableSetOf(0 to 0, 0 to 2, 2 to 0, 2 to 2)
-            // could safely use !! as Bot always moves second
-            grid.coordinatesOf("X")?.let {
+            grid.coordinatesOf(Mark.X)?.let {
                 corners -= it
             }
             corners.random()
@@ -57,47 +59,45 @@ class Bot(
     }
 
     /**
-     * Scans all 3-character combinations (diagonals, rows, columns) for a free cell based on a
-     * Strategy Pattern set by BotMode.
+     * Scans all 3-Cell List combinations (diagonals, rows, columns) for an unmarked Cell based on a
+     * Strategy Pattern.
      */
-    private fun scanGrid(strategy: (List<Cell>) -> Pair<Int, Int>?): Pair<Int, Int>? {
-        val combos = grid.allRows().iterator()
-        while (combos.hasNext()) {
-            //val coordinates = strategy(combos.next())
-            //if (coordinates.first != -1) return coordinates
-            return strategy(combos.next()) ?: continue
+    private fun scanGrid(
+        strategy: (List<Cell>) -> Pair<Int, Int>?
+    ): Pair<Int, Int>? {
+        val rows = grid.allRows().iterator()
+        while (rows.hasNext()) {
+            return strategy(rows.next()) ?: continue
         }
         return null
     }
 
     /**
-     * Returns `true` if a match is found that allows Bot to win this round.
-     *
-     * single() is safe to use due to short-circuit evaluation (row will always have 3 Cells).
+     * Returns unmarked Cell coordinates if a match is found that allows Bot to win this
+     * round; otherwise, returns null.
      */
-    private fun isOffensive(cells: List<Cell>): Pair<Int, Int>? {
+    private fun beOffensive(cells: List<Cell>): Pair<Int, Int>? {
         val (match, extra) = cells.partition { it.mark == Mark.O }
+
+        // single() is safe to use due to short-circuit evaluation
         return if (match.size == 2 && extra.single().mark == Mark.EMPTY) {
             extra.single().coordinates
         } else {
             null
         }
-        //return 'X' !in cells && cells.count { it == 'O' } == 2
     }
 
     /**
-     * Returns `true` if a match is found that blocks Player.X from having a winning match next
-     * round.
-     *
-     * single() is safe to use due to short-circuit evaluation (row will always have 3 Cells).
+     * Returns unmarked Cell coordinates if a match is found that blocks Player.X from having a
+     * winning match next round; otherwise, returns null.
      */
-    private fun isDefensive(cells: List<Cell>): Pair<Int, Int>? {
+    private fun beDefensive(cells: List<Cell>): Pair<Int, Int>? {
         val (match, extra) = cells.partition { it.mark == Mark.X }
+
         return if (match.size == 2 && extra.single().mark == Mark.EMPTY) {
             extra.single().coordinates
         } else {
             null
         }
-        //return 'O' !in cells && cells.count { it == 'X' } == 2
     }
 }

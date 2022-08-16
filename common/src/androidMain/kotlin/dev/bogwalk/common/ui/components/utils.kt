@@ -6,8 +6,9 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import dev.bogwalk.common.ui.style.*
-import dev.brackish.bogwalk.common.R
+import dev.bogwalk.common.R
 
 @Composable
 actual fun getPainter(res: String): Painter {
@@ -15,7 +16,7 @@ actual fun getPainter(res: String): Painter {
     val drawableClass = R.drawable::class.java
     val field = drawableClass.getDeclaredField(imageName)
     val idValue = field.get(drawableClass) as Int
-    return androidx.compose.ui.res.painterResource(idValue)
+    return painterResource(idValue)
 }
 
 @Composable

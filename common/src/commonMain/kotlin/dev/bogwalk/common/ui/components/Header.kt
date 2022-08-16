@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import dev.bogwalk.common.model.BotMode
 import dev.bogwalk.common.ui.style.*
 
@@ -21,8 +20,8 @@ fun Header(
 ) {
     TopAppBar(
         backgroundColor = Color.Transparent,
-        elevation = 0.dp,
-        contentPadding = PaddingValues(vertical = 5.dp, horizontal = componentPadding)
+        elevation = zeroDP,
+        contentPadding = PaddingValues(vertical = togglePadding, horizontal = componentPadding)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

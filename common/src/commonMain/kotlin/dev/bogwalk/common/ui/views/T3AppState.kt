@@ -12,16 +12,16 @@ internal class T3AppState(
         GameMode.SINGLE -> Bot(grid)
         GameMode.DOUBLE -> null
     }
-    val botMode: BotMode?
-        get() = bot?.mode
+
     private var turn = Player.X
     private var gameState = GameState.PLAYING
     private var player1Streak = 0
     private var player2Streak = 0
 
-    var history by mutableStateOf(listOf(
-        TurnState(instruction = getInstruction(), board = grid.cells)
-    ))
+    val botMode: BotMode?
+        get() = bot?.mode
+
+    var history by mutableStateOf(listOf(TurnState(instruction = getInstruction(), board = grid.cells)))
         private set
 
     private fun getInstruction(): String {
@@ -48,6 +48,11 @@ internal class T3AppState(
         }
     }
 
+    /**
+     * If Player.O is a Bot instance, 2 TurnState instances are instantiated, to ensure that each
+     * player's move is observed and composed (instead of just the final state upon termination
+     * of this function).
+     */
     fun updateGame(row: Int, col: Int) {
         grid.mark(row, col, turn)
         val currentChanges = mutableListOf(updateTurnState())
@@ -62,8 +67,9 @@ internal class T3AppState(
     }
 
     /**
-     * Analyses game grid for a winner; otherwise, checks amount of empty cells to either
-     * declare a draw or to continue game play.
+     * Analyses game Grid for a winner. If none is found, checks amount of empty cells to either
+     * declare a draw or to continue game play. Then returns a new TurnState that stores all
+     * relevant state for the current turn.
      */
     private fun updateTurnState(): TurnState {
         gameState = when {
