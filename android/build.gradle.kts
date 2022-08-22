@@ -1,3 +1,5 @@
+import org.jetbrains.compose.compose
+
 plugins {
     id("org.jetbrains.compose")
     id("com.android.application")
@@ -10,6 +12,11 @@ version = "1.0"
 dependencies {
     implementation(project(":common"))
     implementation("androidx.activity:activity-compose:1.5.1")
+    implementation("androidx.navigation:navigation-compose:2.5.1")
+
+    androidTestImplementation(kotlin("test-junit"))
+    androidTestImplementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+    androidTestImplementation("junit:junit:4.13.2")
 }
 
 android {

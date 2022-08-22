@@ -20,7 +20,7 @@ fun Scores(
     p2IsBot: Boolean
 ) {
     Column(
-        modifier = Modifier.padding(top = smallPadding),
+        modifier = Modifier.padding(vertical = smallPadding),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

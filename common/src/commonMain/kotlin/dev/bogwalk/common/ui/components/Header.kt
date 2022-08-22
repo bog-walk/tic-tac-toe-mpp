@@ -12,9 +12,8 @@ import dev.bogwalk.common.model.BotMode
 import dev.bogwalk.common.ui.style.*
 
 @Composable
-fun Header(
+fun HeaderBar(
     onHomeRequest: () -> Unit,
-    instruction: String,
     botMode: BotMode?,
     onToggleRequest: () -> Unit
 ) {
@@ -42,6 +41,12 @@ fun Header(
             BotToggle(botMode, onToggleRequest)
         }
     }
+}
+
+@Composable
+fun HeaderText(
+    instruction: String,
+) {
     Text(
         text = instruction,
         modifier = Modifier.padding(bottom = componentPadding).fillMaxWidth(),

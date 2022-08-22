@@ -3,9 +3,9 @@ package dev.bogwalk.common.ui.views
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.bogwalk.common.model.BotMode
@@ -41,31 +41,31 @@ fun GameView(
         }
      }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    Scaffold(
+        topBar = { HeaderBar(onHomeRequest, t3AppState.botMode, t3AppState::toggleBot) },
+        backgroundColor = MaterialTheme.colors.surface
     ) {
-        Header(
-            onHomeRequest,
-            history.value.instruction,
-            t3AppState.botMode,
-            t3AppState::toggleBot
-        )
-        Scores(
-            history.value.player1Streak,
-            history.value.player2Streak,
-            t3AppState.botMode != null
-        )
-        T3Grid(
-            history.value.gameState,
-            history.value.board
-        ) { (r, c) ->
-            t3AppState.updateGame(r, c)
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            HeaderText(history.value.instruction)
+            Scores(
+                history.value.player1Streak,
+                history.value.player2Streak,
+                t3AppState.botMode != null
+            )
+            T3Grid(
+                history.value.gameState,
+                history.value.board
+            ) { (r, c) ->
+                t3AppState.updateGame(r, c)
+            }
+            ResetButton(
+                history.value.gameState,
+                t3AppState::playAgain
+            )
         }
-        ResetButton(
-            history.value.gameState,
-            t3AppState::playAgain
-        )
     }
 }

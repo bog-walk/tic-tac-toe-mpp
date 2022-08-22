@@ -3,7 +3,8 @@ package dev.bogwalk.ui.components
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import dev.bogwalk.common.model.BotMode
-import dev.bogwalk.common.ui.components.Header
+import dev.bogwalk.common.ui.components.HeaderBar
+import dev.bogwalk.common.ui.components.HeaderText
 import dev.bogwalk.common.ui.style.*
 import org.junit.Rule
 import org.junit.Test
@@ -15,7 +16,8 @@ internal class HeaderTest {
     @Test
     fun `Header loads correctly in single player`() {
         composeTestRule.setContent {
-            Header({}, BOT_MOVE_TEXT, BotMode.EASY) {}
+            HeaderBar({}, BotMode.EASY) {}
+            HeaderText(BOT_MOVE_TEXT)
         }
 
         composeTestRule
@@ -34,7 +36,8 @@ internal class HeaderTest {
     @Test
     fun `Header loads correctly in double player`() {
         composeTestRule.setContent {
-            Header({}, DRAW_TEXT, null) {}
+            HeaderBar({}, null) {}
+            HeaderText(DRAW_TEXT)
         }
 
         composeTestRule

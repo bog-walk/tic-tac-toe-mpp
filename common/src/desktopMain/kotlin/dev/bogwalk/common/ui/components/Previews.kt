@@ -117,12 +117,18 @@ private fun HeaderPreview() {
         Column(
             modifier = Modifier.width(windowWidth)
         ) {
-            Header({}, BOT_MOVE_TEXT, BotMode.HARD) {}
-            Header({}, BOT_WIN_TEXT, BotMode.EASY) {}
-            Header({}, SP_MOVE_TEXT, BotMode.HARD) {}
-            Header({}, SP_WIN_TEXT, BotMode.EASY) {}
-            Header({}, DRAW_TEXT, null) {}
-            Header({}, "Player X wins!", null) {}
+            HeaderBar({}, BotMode.HARD) {}
+            HeaderText(BOT_MOVE_TEXT)
+            HeaderBar({}, BotMode.EASY) {}
+            HeaderText(BOT_WIN_TEXT)
+            HeaderBar({}, BotMode.HARD) {}
+            HeaderText(SP_MOVE_TEXT)
+            HeaderBar({}, BotMode.EASY) {}
+            HeaderText(SP_WIN_TEXT)
+            HeaderBar({}, null) {}
+            HeaderText(DRAW_TEXT)
+            HeaderBar({}, null) {}
+            HeaderText("Player X wins?")
         }
     }
 }

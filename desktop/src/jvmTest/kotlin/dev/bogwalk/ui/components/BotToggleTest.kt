@@ -39,7 +39,8 @@ internal class BotToggleTest {
             .onNodeWithContentDescription(BOT_DESCRIPTION)
             .assertExists()
             .assert(isNotFocusable() and !isSelectable())
-        composeTestRule.onNodeWithTag(TOGGLE_TEST_TAG)
+        composeTestRule
+            .onNodeWithTag(TOGGLE_TEST_TAG)
             .assertIsNotEnabled()
     }
 }

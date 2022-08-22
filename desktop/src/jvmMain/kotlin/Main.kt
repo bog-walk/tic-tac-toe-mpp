@@ -5,11 +5,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.window.*
-import dev.bogwalk.common.ui.components.ExitDialog
 import dev.bogwalk.common.ui.style.*
 import dev.bogwalk.common.ui.views.EntryView
 import dev.bogwalk.common.ui.views.GameView
 import dev.bogwalk.common.ui.views.Screen
+import dev.bogwalk.common.ui.views.ExitDialog
 
 fun main() = application {
     Window(
