@@ -13,6 +13,8 @@ import org.junit.Test
 /**
  * Unsure of how to create and link android resource generated id through NavHost without creating a
  * XML nav graph....
+ *
+ * Using navController.graph.startDestinationId not possible...
  */
 internal class NavigationTest {
     @get:Rule
@@ -101,6 +103,6 @@ internal class NavigationTest {
     }
 
     private fun getNavController(): NavController {
-        return composeTestRule.activity.findNavController(R.id.??)
+        return composeTestRule.activity.findNavController(R.id.???)
     }*/
 }

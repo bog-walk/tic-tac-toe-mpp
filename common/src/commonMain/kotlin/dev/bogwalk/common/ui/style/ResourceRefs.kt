@@ -10,6 +10,8 @@ val componentPadding = 15.dp
 val smallPadding = 8.dp
 val zeroDP = 0.dp
 val iconSize = 30.dp
+const val LANDSCAPE_WEIGHT_L = 0.6F
+const val LANDSCAPE_WEIGHT_S = 0.4F
 
 // Desktop App Window
 val windowWidth = 530.dp
@@ -21,10 +23,12 @@ const val OPTIONS_DESCRIPTION = "Choose game type"
 const val GAME_MODE_TEST_TAG = "mode button"
 const val PLAYER_ICON = "t3_face.svg"
 const val PLAYER_DESCRIPTION = "Player icon"
-const val BOT_ICON = "t3_bot.svg"
-const val BOT_DESCRIPTION = "Bot icon"
+const val EASY_BOT_ICON = "t3_bot_easy.svg"
+const val EASY_BOT_DESCRIPTION = "Bot icon easy-mode"
 
 // BotToggle
+const val HARD_BOT_ICON = "t3_bot_hard.svg"
+const val HARD_BOT_DESCRIPTION = "Bot icon hard-mode"
 val togglePadding = 5.dp
 const val TOGGLE_TEST_TAG = "bot switch"
 const val SHORT_DELAY = 1000L

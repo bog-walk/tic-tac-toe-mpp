@@ -1,11 +1,11 @@
 package dev.bogwalk.common.ui.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dev.bogwalk.common.model.*
 import dev.bogwalk.common.ui.style.*
 
@@ -14,6 +14,23 @@ import dev.bogwalk.common.ui.style.*
 private fun T3CellPreview() {
     T3Theme {
         Column {
+            T3Cell(GameState.PLAYING, Cell(0 to 0)) {}
+            T3Cell(GameState.PLAYING, Cell(0 to 0, Mark.X, false)) {}
+            T3Cell(GameState.PLAYING, Cell(0 to 0, Mark.O, false)) {}
+            T3Cell(GameState.OVER_DRAW, Cell(0 to 0)) {}
+            T3Cell(GameState.BOT_TURN, Cell(0 to 0)) {}
+            T3Cell(GameState.BOT_TURN, Cell(0 to 0, Mark.X, false)) {}
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun T3CellConstrainedPreview() {
+    T3Theme {
+        Column(
+            modifier = Modifier.width(cellSize * 0.8F)
+        ) {
             T3Cell(GameState.PLAYING, Cell(0 to 0)) {}
             T3Cell(GameState.PLAYING, Cell(0 to 0, Mark.X, false)) {}
             T3Cell(GameState.PLAYING, Cell(0 to 0, Mark.O, false)) {}
@@ -63,6 +80,29 @@ private fun T3GridWhenOverPreview() {
     )
     T3Theme {
         T3Grid(GameState.OVER_WINNER, board) {}
+    }
+}
+
+@Preview
+@Composable
+private fun T3GridInLandscapePreview() {
+    val board = listOf(
+        Cell(0 to 0, Mark.X, false), Cell(0 to 1, Mark.O, false),
+        Cell(0 to 2, Mark.X, false), Cell(1 to 0),
+        Cell(1 to 1, Mark.O, false), Cell(1 to 2), Cell(2 to 0),
+        Cell(2 to 1), Cell(2 to 2, Mark.X, false)
+    )
+    T3Theme {
+        Row(
+            modifier = Modifier.size(width = 800.dp, height = 280.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            T3Grid(GameState.PLAYING, board, Modifier.weight(LANDSCAPE_WEIGHT_L)) {}
+            Box(modifier = Modifier.weight(LANDSCAPE_WEIGHT_S).padding(end = componentPadding)) {
+                HeaderText(BOT_MOVE_TEXT)
+            }
+        }
     }
 }
 

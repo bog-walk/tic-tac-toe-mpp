@@ -1,8 +1,6 @@
 package dev.bogwalk.common.ui.views
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
@@ -11,13 +9,13 @@ import androidx.compose.ui.Modifier
 import dev.bogwalk.common.model.BotMode
 import dev.bogwalk.common.model.GameMode
 import dev.bogwalk.common.ui.components.*
-import dev.bogwalk.common.ui.style.SHORT_DELAY
-import dev.bogwalk.common.ui.style.LONG_DELAY
+import dev.bogwalk.common.ui.style.*
 import kotlinx.coroutines.delay
 
 @Composable
 fun GameView(
     mode: GameMode,
+    isInLandscape: Boolean = false,
     onHomeRequest: () -> Unit
 ) {
     val t3AppState = remember { T3AppState(mode) }
@@ -45,27 +43,59 @@ fun GameView(
         topBar = { HeaderBar(onHomeRequest, t3AppState.botMode, t3AppState::toggleBot) },
         backgroundColor = MaterialTheme.colors.surface
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            HeaderText(history.value.instruction)
-            Scores(
-                history.value.player1Streak,
-                history.value.player2Streak,
-                t3AppState.botMode != null
-            )
-            T3Grid(
-                history.value.gameState,
-                history.value.board
-            ) { (r, c) ->
-                t3AppState.updateGame(r, c)
+        if (isInLandscape) {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                T3Grid(
+                    history.value.gameState,
+                    history.value.board,
+                    Modifier.weight(LANDSCAPE_WEIGHT_L)
+                ) { (r, c) ->
+                    t3AppState.updateGame(r, c)
+                }
+                Column(
+                    modifier = Modifier.weight(LANDSCAPE_WEIGHT_S).padding(end = componentPadding),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    HeaderText(history.value.instruction)
+                    Scores(
+                        history.value.player1Streak,
+                        history.value.player2Streak,
+                        t3AppState.botMode != null
+                    )
+                    ResetButton(
+                        history.value.gameState,
+                        t3AppState::playAgain
+                    )
+                }
             }
-            ResetButton(
-                history.value.gameState,
-                t3AppState::playAgain
-            )
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                HeaderText(history.value.instruction)
+                Scores(
+                    history.value.player1Streak,
+                    history.value.player2Streak,
+                    t3AppState.botMode != null
+                )
+                T3Grid(
+                    history.value.gameState,
+                    history.value.board
+                ) { (r, c) ->
+                    t3AppState.updateGame(r, c)
+                }
+                ResetButton(
+                    history.value.gameState,
+                    t3AppState::playAgain
+                )
+            }
         }
     }
 }

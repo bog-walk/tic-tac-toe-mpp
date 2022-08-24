@@ -1,9 +1,9 @@
 package dev.bogwalk.common.ui.components
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
@@ -24,17 +24,19 @@ fun T3Cell(
         modifier = Modifier
             .testTag(CELL_TEST_TAG)
             .padding(smallPadding)
-            .requiredSize(cellSize),
+            .sizeIn(maxHeight = cellSize, maxWidth = cellSize)
+            .aspectRatio(1.0F),
         enabled = gameState == GameState.PLAYING && cell.isEnabled,
         elevation = ButtonDefaults.elevation(defaultElevation = cellElevation),
         shape = MaterialTheme.shapes.medium,
         colors = getButtonColors(cell.mark, gameState)
     ) {
         Text(
+            modifier = Modifier.wrapContentSize(Alignment.Center, true),
             text = cell.mark.toString(),
             fontSize = cellFontSize,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Center
         )
     }
 }

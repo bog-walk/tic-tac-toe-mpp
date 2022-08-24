@@ -1,5 +1,6 @@
 package dev.bogwalk.android
 
+import android.content.res.Configuration
 import dev.bogwalk.common.ui.views.GameView
 import android.os.Bundle
 import androidx.activity.compose.BackHandler
@@ -9,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,6 +28,8 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             val navController = rememberNavController()
+            val configuration = LocalConfiguration.current
+            val orientation by remember { mutableStateOf(configuration.orientation) }
             var isAskingToGoHome by remember { mutableStateOf(false) }
 
             T3Theme {
@@ -59,7 +63,10 @@ class MainActivity : AppCompatActivity() {
                         })
                     ) { backStackEntry ->
                         BackHandler { isAskingToGoHome = true }
-                        GameView(backStackEntry.arguments?.getSerializable("mode") as GameMode) {
+                        GameView(
+                            backStackEntry.arguments?.getSerializable("mode") as GameMode,
+                            orientation == Configuration.ORIENTATION_LANDSCAPE
+                        ) {
                             isAskingToGoHome = true
                         }
                     }

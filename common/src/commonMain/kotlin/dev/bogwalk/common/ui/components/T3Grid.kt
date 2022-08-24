@@ -13,21 +13,27 @@ import dev.bogwalk.common.ui.style.smallPadding
 fun T3Grid(
     gameState: GameState,
     board: List<Cell>,
+    modifier: Modifier = Modifier,
     onCellChosen: (Pair<Int, Int>) -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(top = smallPadding, bottom = smallPadding).fillMaxWidth(),
+        modifier = modifier.padding(top = smallPadding, bottom = smallPadding).fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         repeat(3) { row ->
             Row(
+                modifier = modifier,
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 for (col in 0..2) {
                     key("$row$col") {
-                        T3Cell(gameState, board[row * 3 + col], onCellChosen)
+                        T3Cell(
+                            gameState,
+                            board[row * 3 + col],
+                            onCellChosen
+                        )
                     }
                 }
             }

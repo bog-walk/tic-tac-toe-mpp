@@ -22,8 +22,14 @@ fun BotToggle(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = getPainter(BOT_ICON),
-            contentDescription = BOT_DESCRIPTION,
+            painter = when (botMode) {
+                BotMode.HARD -> getPainter(HARD_BOT_ICON)
+                else -> getPainter(EASY_BOT_ICON)
+            },
+            contentDescription = when (botMode) {
+                BotMode.HARD -> HARD_BOT_DESCRIPTION
+                else -> EASY_BOT_DESCRIPTION
+            },
             modifier = Modifier.requiredSize(iconSize),
             tint = when (botMode) {
                 null -> MaterialTheme.colors.background
