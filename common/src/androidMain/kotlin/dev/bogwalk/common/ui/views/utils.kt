@@ -1,5 +1,7 @@
 package dev.bogwalk.common.ui.views
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -13,6 +15,10 @@ actual sealed class Screen(val route: String) {
     object Entry : Screen("entry")
     object Game : Screen("game/{mode}")
 }
+
+actual typealias T3Parcelable = Parcelable
+
+actual typealias T3Parcelize = Parcelize
 
 @Composable
 actual fun ExitDialog(

@@ -22,6 +22,16 @@ actual sealed class Screen {
     data class Game(val mode: GameMode) : Screen()
 }
 
+// only exists to allow state retention on Android configuration change
+actual interface T3Parcelable
+
+// this should normally not exist as expect should be annotated with
+// @OptIn(ExperimentalMultiplatform::class)
+// @OptionalExpectation
+// but this causes error: Declaration annotated with '@OptionalExpectation' can only be used in
+// common module sources, even when it is being used in the common module...
+actual annotation class T3Parcelize
+
 @Composable
 actual fun ExitDialog(
     onCloseRequest: () -> Unit,

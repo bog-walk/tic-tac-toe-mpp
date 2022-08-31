@@ -1,28 +1,31 @@
 package dev.bogwalk.common.ui.views
 
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.listSaver
 import dev.bogwalk.common.model.*
 import dev.bogwalk.common.ui.style.*
 
 internal class T3AppState(
-    private val mode: GameMode
+    val mode: GameMode,
+    val grid: Grid = Grid()
 ) {
-    private val grid = Grid()
-    private val bot: Bot? = when (mode) {
+    var bot: Bot? = when (mode) {
         GameMode.SINGLE -> Bot(grid)
         GameMode.DOUBLE -> null
     }
-
-    private var turn = Player.X
-    private var gameState = GameState.PLAYING
-    private var player1Streak = 0
-    private var player2Streak = 0
-
     val botMode: BotMode?
         get() = bot?.mode
 
-    var history by mutableStateOf(listOf(TurnState(instruction = getInstruction(), board = grid.cells)))
-        private set
+    var history by mutableStateOf(listOf(
+        TurnState(
+            instruction = if (mode == GameMode.SINGLE) SP_MOVE_TEXT else "Player X turn",
+            board = grid.cells)
+    ))
+
+    private var gameState: GameState = history[0].gameState
+    private var turn: Player = history[0].turn
+    private var player1Streak: Int = history[0].player1Streak
+    private var player2Streak: Int = history[0].player2Streak
 
     private fun getInstruction(): String {
         return when (gameState) {
@@ -91,18 +94,38 @@ internal class T3AppState(
             }
         }
         return TurnState(
-            gameState, getInstruction(), grid.cells, player1Streak, player2Streak
+            gameState, turn, player1Streak, player2Streak, getInstruction(), grid.cells
         )
     }
 
     fun playAgain() {
         grid.clear()
-        turn = Player.X
         gameState = GameState.PLAYING
+        turn = Player.X
         history = listOf(
             TurnState(
-            instruction = getInstruction(), board = grid.cells,
-            player1Streak = player1Streak, player2Streak = player2Streak
-        ))
+                player1Streak = player1Streak, player2Streak = player2Streak,
+                instruction = getInstruction(), board = grid.cells
+            ))
     }
+}
+
+// Android module currently does not use ViewModel so needs to be bundled to be used
+// with rememberSaveable() in GameView (to retain state during configuration changes)
+internal val T3AppStateSaver = run {
+    listSaver(
+        save = { data: T3AppState ->
+            listOf(data.mode, data.grid.toString(), data.bot?.mode, data.history)
+        },
+        restore = { restorationList: List<Any?> ->
+            T3AppState(
+                mode = restorationList[0] as GameMode,
+                grid = Grid(restorationList[1] as String)
+            ).apply {
+                this.bot?.mode = restorationList[2] as BotMode
+                @Suppress("UNCHECKED_CAST")
+                this.history = restorationList[3] as List<TurnState>
+            }
+        }
+    )
 }
