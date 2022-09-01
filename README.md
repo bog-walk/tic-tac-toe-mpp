@@ -1,19 +1,20 @@
 # :rocket: Tic Tac Toe :x::o::robot:
 
-<p align="center"><img src="screenshots/t3_desktop_dp_demo"><img src="screenshots/t3_android_dp_demo"></p>
+<p align="center"><img src="screenshots/t3_desktop_dp_demo.gif"><img src="screenshots/t3_android_dp_demo.gif"></p>
 
-:video_game: A classic dual-mode Tic Tac Toe for Desktop & Android built using **JetBrains** 
+:video_game: A classic dual-mode Tic Tac Toe game for Desktop & Android built using **JetBrains** 
 [Compose Multiplatform](https://www.jetbrains.com/lp/compose-mpp/).
 
 ## :memo: Game details
 
 The classic game comes with two versions: a local 2-player mode and a single-player versus bot mode with switchable difficulty.
 
-<p align="center"><img src="screenshots/t3_desktop_sp_demo"><img src="screenshots/t3_android_sp_demo"></p>
+![](screenshots/t3_desktop_sp_demo.gif)
+![](screenshots/t3_android_sp_demo.gif)
 
 ## :briefcase: Features
 
-- All model data, logic, and UI components (except `ExitDialog`) are shared in `:common` module
+- All model data, logic, and UI components (except `ExitDialog`) shared in `:common`
 - Platform-specific declarations using `expect`/`actual` for:
 	- Pop-up dialog composable
 	- Screen navigation sealed class
