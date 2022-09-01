@@ -17,9 +17,10 @@ import org.junit.Test
  * Using navController.graph.startDestinationId not possible...
  */
 internal class NavigationTest {
+    /*
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
-    /*
+
     @Test
     fun `app launches in EntryView`() {
         assertEquals(getNavController().currentDestination?.id, R.id.???)

@@ -14,9 +14,8 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.5.1")
     implementation("androidx.navigation:navigation-compose:2.5.1")
 
-    androidTestImplementation(kotlin("test-junit"))
-    androidTestImplementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
-    androidTestImplementation("junit:junit:4.13.2")
+    testImplementation(compose("org.jetbrains.compose.ui:ui-test-junit4"))
+    testImplementation("junit:junit:4.13.2")
 }
 
 android {
@@ -28,6 +27,7 @@ android {
         targetSdk = 31
         versionCode = 1
         versionName = "1.0"
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

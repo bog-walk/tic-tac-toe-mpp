@@ -27,7 +27,7 @@ internal class EntryViewTest {
             .onAllNodesWithText(OPTIONS_TEXT, useUnmergedTree = true)
             .assertCountEquals(2)
         composeTestRule
-            .onAllNodesWithContentDescription(BOT_DESCRIPTION, useUnmergedTree = true)
+            .onAllNodesWithContentDescription(EASY_BOT_DESCRIPTION, useUnmergedTree = true)
             .assertCountEquals(1)
         composeTestRule
             .onAllNodesWithTag(GAME_MODE_TEST_TAG)

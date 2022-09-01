@@ -4,7 +4,8 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import dev.bogwalk.common.model.BotMode
 import dev.bogwalk.common.ui.components.BotToggle
-import dev.bogwalk.common.ui.style.BOT_DESCRIPTION
+import dev.bogwalk.common.ui.style.EASY_BOT_DESCRIPTION
+import dev.bogwalk.common.ui.style.HARD_BOT_DESCRIPTION
 import dev.bogwalk.common.ui.style.TOGGLE_TEST_TAG
 import org.junit.Rule
 import org.junit.Test
@@ -20,7 +21,7 @@ internal class BotToggleTest {
         }
 
         composeTestRule
-            .onNodeWithContentDescription(BOT_DESCRIPTION)
+            .onNodeWithContentDescription(EASY_BOT_DESCRIPTION)
             .assertExists()
             .assert(isNotFocusable() and !isSelectable())
         composeTestRule
@@ -36,7 +37,7 @@ internal class BotToggleTest {
         }
 
         composeTestRule
-            .onNodeWithContentDescription(BOT_DESCRIPTION)
+            .onNodeWithContentDescription(EASY_BOT_DESCRIPTION)
             .assertExists()
             .assert(isNotFocusable() and !isSelectable())
         composeTestRule
