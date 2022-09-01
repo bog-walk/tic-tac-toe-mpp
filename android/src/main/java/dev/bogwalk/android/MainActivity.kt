@@ -27,10 +27,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val navController = rememberNavController()
+            // must be declared separately as current is a composable call that cannot be used
+            // inside remember {}
             val configuration = LocalConfiguration.current
             val orientation by remember { mutableStateOf(configuration.orientation) }
             var isAskingToGoHome by remember { mutableStateOf(false) }
+
+            val navController = rememberNavController()
 
             T3Theme {
                 if (isAskingToGoHome) {
@@ -39,8 +42,8 @@ class MainActivity : AppCompatActivity() {
                         onConfirm = {
                             isAskingToGoHome = false
                             navController.navigate("entry") {
-                                // otherwise back button on EntryView returns to GameView instead
-                                // of exiting app entirely
+                                // otherwise back button from EntryView returns to GameView instead
+                                // of exiting the app entirely
                                 popUpTo(Screen.Game.route) { inclusive = true }
                                 launchSingleTop = true
                             }

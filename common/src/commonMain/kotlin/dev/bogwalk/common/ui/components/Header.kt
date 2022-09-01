@@ -28,7 +28,7 @@ fun HeaderBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
-                onClick = onHomeRequest,
+                onClick = { onHomeRequest() },
                 modifier = Modifier.alpha(ContentAlpha.high)
             ) {
                 Icon(
@@ -45,7 +45,7 @@ fun HeaderBar(
 
 @Composable
 fun HeaderText(
-    instruction: String,
+    instruction: String
 ) {
     Text(
         text = instruction,

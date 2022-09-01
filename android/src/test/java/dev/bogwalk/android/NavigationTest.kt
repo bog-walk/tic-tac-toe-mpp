@@ -11,10 +11,13 @@ import org.junit.Rule
 import org.junit.Test
 
 /**
- * Unsure of how to create and link android resource generated id through NavHost without creating a
- * XML nav graph....
+ * TODO!!!!
  *
- * Using navController.graph.startDestinationId not possible...
+ * Unsure of how to create and link Android resource generated ids through NavHost without
+ * creating a XML nav graph....
+ *
+ * Searching for a way to link composeTestRule.activity to a navController. Using
+ * navController.graph.startDestinationId is not possible without finding it first?
  */
 internal class NavigationTest {
     /*

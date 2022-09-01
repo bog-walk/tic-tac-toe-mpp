@@ -13,6 +13,10 @@ import dev.bogwalk.common.model.GameState
 import dev.bogwalk.common.model.Cell
 import dev.bogwalk.common.ui.style.*
 
+/**
+ * Button representing each Cell in game Grid, with responsive size and contents based on
+ * constraints set by parent T3Grid.
+ */
 @Composable
 fun T3Cell(
     gameState: GameState,
@@ -49,7 +53,8 @@ private fun getButtonColors(
     return when (mark) {
         Mark.EMPTY -> {
             when (gameState) {
-                // even though Cells are disabled when Bot is moving, they should look enabled
+                // even though unmarked Cells are disabled during Bot's turn,
+                // their style remains unchanged
                 GameState.PLAYING, GameState.BOT_TURN -> ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colors.onBackground,
                     disabledBackgroundColor = MaterialTheme.colors.onBackground

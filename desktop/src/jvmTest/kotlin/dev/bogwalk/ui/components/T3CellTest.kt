@@ -38,7 +38,7 @@ internal class T3CellTest {
     }
 
     @Test
-    fun `T3Cell is disabled when bot is moving`() {
+    fun `T3Cell is disabled during bot's turn`() {
         val state = mutableStateOf(GameState.PLAYING)
         composeTestRule.setContent {
             T3Cell(state.value, Cell(0 to 0)) {}

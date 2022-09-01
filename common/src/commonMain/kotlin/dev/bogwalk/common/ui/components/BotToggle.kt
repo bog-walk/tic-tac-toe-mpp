@@ -12,6 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import dev.bogwalk.common.ui.style.*
 
+/**
+ * Single-icon Switch is present regardless of GameMode, but is only enabled if GameMode.SINGLE.
+ * When enabled, Icon and Switch change style based on BotMode.
+ */
 @Composable
 fun BotToggle(
     botMode: BotMode?,

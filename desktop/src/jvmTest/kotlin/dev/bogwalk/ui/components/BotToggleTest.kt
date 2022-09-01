@@ -1,5 +1,6 @@
 package dev.bogwalk.ui.components
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import dev.bogwalk.common.model.BotMode
@@ -28,6 +29,27 @@ internal class BotToggleTest {
             .onNodeWithTag(TOGGLE_TEST_TAG)
             .assertIsEnabled()
             .assertIsToggleable()
+    }
+
+    @Test
+    fun `BotToggle switches modes correctly`() {
+        val mode = mutableStateOf(BotMode.EASY)
+        composeTestRule.setContent {
+            BotToggle(mode.value) {}
+        }
+
+        composeTestRule
+            .onNodeWithContentDescription(EASY_BOT_DESCRIPTION)
+            .assertExists()
+            .assert(isNotFocusable() and !isSelectable())
+
+        mode.value = BotMode.HARD
+        composeTestRule.waitForIdle()
+
+        composeTestRule
+            .onNodeWithContentDescription(HARD_BOT_DESCRIPTION)
+            .assertExists()
+            .assert(isNotFocusable() and !isSelectable())
     }
 
     @Test

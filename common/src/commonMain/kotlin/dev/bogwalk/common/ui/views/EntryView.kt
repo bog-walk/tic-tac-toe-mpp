@@ -15,7 +15,9 @@ import dev.bogwalk.common.ui.components.getPainter
 import dev.bogwalk.common.ui.style.*
 
 @Composable
-fun EntryView(onOptionClick: (GameMode) -> Unit) {
+fun EntryView(
+    onOptionClick: (GameMode) -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,

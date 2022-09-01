@@ -55,7 +55,7 @@ private fun SingleScore(
             style = MaterialTheme.typography.body1
         )
         Spacer(modifier = Modifier.width(componentPadding))
-        // Sourced from the official Jetpack Compose Animation guide.
+        // Based on the official Jetpack Compose Animation guide example.
         // https://developer.android.com/jetpack/compose/animation
         AnimatedContent(
             targetState = score,

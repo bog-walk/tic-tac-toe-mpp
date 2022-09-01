@@ -10,12 +10,13 @@ val componentPadding = 15.dp
 val smallPadding = 8.dp
 val zeroDP = 0.dp
 val iconSize = 30.dp
-const val LANDSCAPE_WEIGHT_L = 0.6F
-const val LANDSCAPE_WEIGHT_S = 0.4F
 
 // Desktop App Window
 val windowWidth = 530.dp
 val windowHeight = 650.dp
+// Android App
+const val LANDSCAPE_WEIGHT_L = 0.6F
+const val LANDSCAPE_WEIGHT_S = 0.4F
 
 // EntryView
 const val OPTIONS_TEXT = "vs"

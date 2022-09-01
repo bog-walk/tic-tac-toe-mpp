@@ -155,7 +155,7 @@ internal class GridTest {
     }
 
     @Test
-    fun `coordinatesOf() correctly returns null if mark absent`() {
+    fun `coordinatesOf() correctly returns null if Mark absent`() {
         val input = "X        ".also {
             assertTrue { it.isValidTestInput() }
         }
@@ -164,7 +164,7 @@ internal class GridTest {
     }
 
     @Test
-    fun `coordinatesOf() correctly finds only first occurrence`() {
+    fun `coordinatesOf() correctly finds only the first occurrence`() {
         val input = "  O XXO  ".also {
             assertTrue { it.isValidTestInput() }
         }

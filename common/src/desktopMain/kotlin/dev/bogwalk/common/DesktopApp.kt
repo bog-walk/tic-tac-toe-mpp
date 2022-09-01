@@ -13,7 +13,7 @@ import dev.bogwalk.common.ui.views.GameView
 
 @Preview
 @Composable
-fun SinglePlayerGamePreview() {
+private fun SinglePlayerGamePreview() {
     T3Theme {
         Surface(
             modifier = Modifier.width(windowWidth).height(windowHeight)
@@ -25,7 +25,7 @@ fun SinglePlayerGamePreview() {
 
 @Preview
 @Composable
-fun DoublePlayerGamePreview() {
+private fun DoublePlayerGamePreview() {
     T3Theme {
         Surface(
             modifier = Modifier.width(windowWidth).height(windowHeight)
@@ -37,7 +37,7 @@ fun DoublePlayerGamePreview() {
 
 @Preview
 @Composable
-fun LandscapeGamePreview() {
+private fun LandscapeGamePreview() {
     T3Theme {
         Surface(
             modifier = Modifier.width(1080.dp).height(350.dp)

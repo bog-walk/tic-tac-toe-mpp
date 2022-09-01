@@ -3,6 +3,8 @@ package dev.bogwalk.common.model
 /**
  * Class representing the standard 3x3 game board with encapsulated functionality that progresses
  * game play and allows safe bot analysis.
+ *
+ * @param [elements] optional String for testing (and state retention in Android)
  */
 class Grid(
     elements: String = ""
@@ -57,8 +59,8 @@ class Grid(
     }
 
     /**
-     * Yields List representations of every row combination, i.e. 2 diagonals, 3 rows, and 3
-     * columns, then suspends until the next List is requested by the iterator.
+     * Yields List representations of every row combination (i.e. 2 diagonals, 3 rows, and 3
+     * columns) then suspends until the next List is requested by the iterator.
      *
      * @return Sequence of Lists with 3 Cells each, representing a row combination in current Grid.
      */
@@ -82,6 +84,9 @@ class Grid(
         return cells.filter { it.mark == Mark.EMPTY }
     }
 
+    /**
+     * Alters the game Grid to only include unmarked, enabled Cells.
+     */
     fun clear() {
         for (row in 0..2) {
             for (col in 0..2) {

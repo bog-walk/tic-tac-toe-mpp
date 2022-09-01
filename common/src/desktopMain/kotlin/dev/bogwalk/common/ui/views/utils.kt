@@ -25,10 +25,10 @@ actual sealed class Screen {
 // only exists to allow state retention on Android configuration change
 actual interface T3Parcelable
 
-// this should normally not exist as expect should be annotated with
+// this should normally not exist as expect declaration should be annotated with
 // @OptIn(ExperimentalMultiplatform::class)
 // @OptionalExpectation
-// but this causes error: Declaration annotated with '@OptionalExpectation' can only be used in
+// but this causes known bug: Declaration annotated with '@OptionalExpectation' can only be used in
 // common module sources, even when it is being used in the common module...
 actual annotation class T3Parcelize
 

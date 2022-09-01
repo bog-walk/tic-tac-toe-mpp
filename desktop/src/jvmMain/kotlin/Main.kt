@@ -30,8 +30,8 @@ fun main() = application {
                         ExitDialog(
                             onCloseRequest = { isAskingToGoHome = false },
                             onConfirm = {
-                                screenState = Screen.Entry
                                 isAskingToGoHome = false
+                                screenState = Screen.Entry
                             }
                         )
                     }

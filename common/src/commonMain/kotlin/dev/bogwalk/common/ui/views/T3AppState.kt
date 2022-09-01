@@ -19,31 +19,14 @@ internal class T3AppState(
     var history by mutableStateOf(listOf(
         TurnState(
             instruction = if (mode == GameMode.SINGLE) SP_MOVE_TEXT else "Player X turn",
-            board = grid.cells)
+            board = grid.cells
+        )
     ))
 
     private var gameState: GameState = history[0].gameState
     private var turn: Player = history[0].turn
     private var player1Streak: Int = history[0].player1Streak
     private var player2Streak: Int = history[0].player2Streak
-
-    private fun getInstruction(): String {
-        return when (gameState) {
-            GameState.PLAYING -> when (mode) {
-                GameMode.SINGLE -> SP_MOVE_TEXT
-                GameMode.DOUBLE -> "Player ${turn.name} turn"
-            }
-            GameState.BOT_TURN -> BOT_MOVE_TEXT
-            GameState.OVER_DRAW -> DRAW_TEXT
-            GameState.OVER_WINNER -> when (mode) {
-                GameMode.SINGLE -> when (turn) {
-                    Player.X -> SP_WIN_TEXT
-                    Player.O -> BOT_WIN_TEXT
-                }
-                GameMode.DOUBLE -> "Player ${turn.name} wins!"
-            }
-        }
-    }
 
     fun toggleBot() {
         bot?.let {
@@ -96,6 +79,24 @@ internal class T3AppState(
         return TurnState(
             gameState, turn, player1Streak, player2Streak, getInstruction(), grid.cells
         )
+    }
+
+    private fun getInstruction(): String {
+        return when (gameState) {
+            GameState.PLAYING -> when (mode) {
+                GameMode.SINGLE -> SP_MOVE_TEXT
+                GameMode.DOUBLE -> "Player ${turn.name} turn"
+            }
+            GameState.BOT_TURN -> BOT_MOVE_TEXT
+            GameState.OVER_DRAW -> DRAW_TEXT
+            GameState.OVER_WINNER -> when (mode) {
+                GameMode.SINGLE -> when (turn) {
+                    Player.X -> SP_WIN_TEXT
+                    Player.O -> BOT_WIN_TEXT
+                }
+                GameMode.DOUBLE -> "Player ${turn.name} wins!"
+            }
+        }
     }
 
     fun playAgain() {
